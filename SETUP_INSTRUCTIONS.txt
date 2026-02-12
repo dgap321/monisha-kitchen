@@ -1,0 +1,130 @@
+============================================================
+  MONISHA KITCHEN - VPS Setup Instructions
+  (For Hostinger VPS - Ubuntu)
+============================================================
+
+You only need to do 3 things:
+
+------------------------------------------------------------
+STEP 1: Log in to your VPS
+------------------------------------------------------------
+
+Open your laptop/PC terminal (or PuTTY on Windows) and type:
+
+    ssh root@YOUR_VPS_IP
+
+Replace YOUR_VPS_IP with your actual VPS IP address.
+(You got this IP from Hostinger when you bought the VPS)
+
+Enter your VPS password when asked.
+
+
+------------------------------------------------------------
+STEP 2: Download and run the deploy script
+------------------------------------------------------------
+
+Copy and paste this ONE command:
+
+    curl -sL https://raw.githubusercontent.com/dgap321/monisha-kitchen/main/deploy.sh | bash
+
+OR if that doesn't work, do it in two steps:
+
+    wget https://raw.githubusercontent.com/dgap321/monisha-kitchen/main/deploy.sh
+    bash deploy.sh
+
+The script will ask you a few questions:
+  - Your domain name (kitchenofmonisha.in)
+  - Your Firebase API Key
+  - Your Firebase App ID
+  - Whether DNS is pointing to your VPS
+
+That's it! The script does everything else automatically.
+
+
+------------------------------------------------------------
+STEP 3: Point your domain to the VPS
+------------------------------------------------------------
+
+Go to your domain registrar (where you bought kitchenofmonisha.in):
+
+1. Find DNS settings
+2. Add/edit an "A Record":
+   - Name: @
+   - Value: YOUR_VPS_IP
+3. Add another "A Record":
+   - Name: www
+   - Value: YOUR_VPS_IP
+
+Wait 5-30 minutes for DNS to update.
+
+
+------------------------------------------------------------
+STEP 4: Add domain to Firebase
+------------------------------------------------------------
+
+Go to https://console.firebase.google.com
+  > Your project (nvzg-a9977)
+  > Authentication
+  > Settings
+  > Authorized domains
+  > Add domain: kitchenofmonisha.in
+
+Without this, phone login won't work on your website!
+
+
+============================================================
+WHERE TO FIND YOUR FIREBASE KEYS
+============================================================
+
+1. Go to https://console.firebase.google.com
+2. Click on your project (nvzg-a9977)
+3. Click the gear icon (⚙️) > Project Settings
+4. Scroll down to "Your apps" section
+5. You'll see:
+   - API Key (starts with "AIza...")
+   - App ID (looks like "1:123456789:web:abc123")
+   - Project ID: nvzg-a9977
+   - Storage Bucket: nvzg-a9977.firebasestorage.app
+
+
+============================================================
+USEFUL COMMANDS (run these on your VPS)
+============================================================
+
+See if app is running:     pm2 status
+View app logs:             pm2 logs monisha-kitchen
+Restart the app:           pm2 restart monisha-kitchen
+Stop the app:              pm2 stop monisha-kitchen
+
+Update app (after code changes on GitHub):
+    cd /home/monisha-kitchen
+    git pull
+    npm install
+    npm run build
+    pm2 restart monisha-kitchen
+
+
+============================================================
+TROUBLESHOOTING
+============================================================
+
+Problem: Website shows "502 Bad Gateway"
+Fix:     pm2 restart monisha-kitchen
+
+Problem: Website not loading at all
+Fix:     sudo systemctl restart nginx
+
+Problem: Phone login not working
+Fix:     Add your domain to Firebase Authorized Domains
+         (see Step 4 above)
+
+Problem: Can't upload images
+Fix:     Check Firebase Storage rules in Firebase Console
+
+Problem: Need to re-run the setup
+Fix:     Just run the deploy script again:
+         bash /home/monisha-kitchen/deploy.sh
+
+Need help? Contact the developer or check:
+  pm2 logs monisha-kitchen
+  (this shows what's happening with the app)
