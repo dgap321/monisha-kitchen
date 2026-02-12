@@ -735,7 +735,7 @@ function BottomNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-orange-100 px-4 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
+    <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-orange-100 px-4 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-[0_-4px_20px_rgba(0,0,0,0.08)] rounded-t-2xl">
       {navItems.map((item) => (
         <button
           key={item.label}
@@ -772,7 +772,7 @@ function MerchantNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-amber-100 to-amber-50 border-t border-amber-200 text-foreground px-6 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-amber-100 to-amber-50 border-t border-amber-200 text-foreground px-6 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-lg rounded-t-2xl">
       {navItems.map((item) => (
         <button
           key={item.label}
@@ -903,7 +903,7 @@ function CustomerHome() {
   return (
     <div className="min-h-screen overflow-y-auto pb-20 bg-gradient-to-b from-orange-50/80 to-amber-50/40">
       {/* Header */}
-      <div className="bg-gradient-to-r from-amber-500 to-amber-400 p-4 sticky top-0 z-30 shadow-lg space-y-3 text-white">
+      <div className="bg-gradient-to-r from-amber-500 to-amber-400 p-4 sticky top-0 z-30 shadow-lg space-y-3 text-white rounded-b-2xl">
         {!settings.isOpen && (
            <div className="bg-red-700/80 text-white text-xs font-bold py-2 px-4 -mx-4 -mt-4 mb-2 flex items-center justify-center gap-2 backdrop-blur-sm">
               <LogOut className="w-3 h-3" />
@@ -1170,7 +1170,7 @@ function CustomerCart() {
   if (step === "payment") {
     return (
       <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-        <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg">
+        <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl">
            <h1 className="font-heading font-bold text-lg text-white">Payment</h1>
         </div>
         
@@ -1223,7 +1223,7 @@ function CustomerCart() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-      <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg">
+      <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl">
          <h1 className="font-heading font-bold text-lg text-white">My Cart</h1>
       </div>
 
@@ -1333,7 +1333,7 @@ function CustomerMenu() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg space-y-3">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl space-y-3">
          <h1 className="font-heading font-bold text-lg text-white">Our Menu</h1>
          
          <div className="relative">
@@ -1531,7 +1531,7 @@ function CustomerOrders() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl">
          <h1 className="font-heading font-bold text-lg text-white">My Orders</h1>
       </div>
 
@@ -1588,7 +1588,7 @@ function CustomerProfile() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl">
          <h1 className="font-heading font-bold text-lg text-white">My Profile</h1>
       </div>
 
@@ -1658,7 +1658,7 @@ function CustomerCategories() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
@@ -1744,7 +1744,7 @@ function CustomerCategoryItems({ params }: { params: { category: string } }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
@@ -1775,7 +1775,7 @@ function CustomerTerms() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
@@ -1850,7 +1850,7 @@ function CustomerPrivacyPolicy() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
@@ -1908,7 +1908,7 @@ function CustomerRefundPolicy() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
@@ -1949,7 +1949,7 @@ function CustomerDeliveryPolicy() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
@@ -2000,7 +2000,7 @@ function CustomerContact() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
@@ -2101,7 +2101,7 @@ function CustomerBannerItems({ params }: { params: { bannerId: string } }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
-       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg rounded-b-2xl flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
@@ -2213,7 +2213,7 @@ function MerchantDashboard() {
 
   return (
     <div className="min-h-screen bg-amber-50 pb-20 text-foreground flex flex-col">
-       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 flex justify-between items-center">
+       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 rounded-b-2xl flex justify-between items-center">
          <div>
             <h1 className="font-heading font-bold text-xl">{settings.storeName}</h1>
             <p className="text-xs text-foreground/40 uppercase tracking-widest font-medium mt-1">Merchant Dashboard</p>
@@ -2503,7 +2503,7 @@ function MerchantMenu() {
 
   return (
     <div className="min-h-screen bg-amber-50 pb-20 text-foreground flex flex-col">
-       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 flex justify-between items-center">
+       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 rounded-b-2xl flex justify-between items-center">
          <h1 className="font-heading font-bold text-xl">Menu Management</h1>
          <div className="flex gap-2">
             <Button variant="outline" size="icon" className="rounded-full border-amber-200 bg-amber-100 hover:bg-amber-200" onClick={() => setIsCategoryOpen(true)}>
@@ -2801,7 +2801,7 @@ function MerchantSettings() {
          radiusKm={settings.deliveryRadiusKm}
          onSave={handleSaveStoreLocation}
        />
-       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200">
+       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 rounded-b-2xl">
          <h1 className="font-heading font-bold text-xl">Store Settings</h1>
       </div>
       
@@ -3093,7 +3093,7 @@ function MerchantCustomers() {
 
   return (
     <div className="min-h-screen bg-amber-50 pb-20 text-foreground flex flex-col">
-       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 space-y-4">
+       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 rounded-b-2xl space-y-4">
          <h1 className="font-heading font-bold text-xl">Customers</h1>
          
          <div className="relative">
@@ -3176,7 +3176,7 @@ function MerchantReviews() {
 
   return (
     <div className="min-h-screen bg-amber-50 pb-20 text-foreground flex flex-col">
-      <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200">
+      <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 rounded-b-2xl">
         <h1 className="font-heading font-bold text-xl">Reviews</h1>
         <p className="text-sm text-foreground/60 mt-1">{allReviews.length} total reviews</p>
       </div>
