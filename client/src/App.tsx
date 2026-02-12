@@ -814,9 +814,15 @@ function CustomerHome() {
 
   useEffect(() => {
     if (banners.length === 0) return;
+    banners.forEach((b: any) => {
+      if (b.image) {
+        const img = new Image();
+        img.src = b.image;
+      }
+    });
     const timer = setInterval(() => {
       setCurrentBannerIndex((prev) => (prev + 1) % banners.length);
-    }, 2000);
+    }, 4000);
     return () => clearInterval(timer);
   }, [banners.length]);
 
@@ -828,16 +834,34 @@ function CustomerHome() {
   );
 
   const allCategories = Array.from(new Set(menu.map((item: any) => item.category)));
-  
-  let displayedCategories = allCategories.filter(c => visibleCategories.includes(c));
-  
-  if (displayedCategories.length === 0 && visibleCategories.length === 0) {
-     displayedCategories = allCategories.slice(0, 8);
-  }
 
-  const showMoreButton = displayedCategories.length > 8 || (visibleCategories.length > 0 && visibleCategories.length < allCategories.length && allCategories.length > 8) || allCategories.length > 8;
-  
-  const finalDisplay = showMoreButton ? displayedCategories.slice(0, 7) : displayedCategories.slice(0, 8);
+  const priorityCategoryKeywords = [
+    "veg",
+    "rice, roti, parathas",
+    "chicken",
+    "non- veg ( fish",
+    "atta roti",
+    "chaat",
+    "prawns",
+    "bengal",
+    "fish rezala",
+  ];
+
+  const matchCategory = (cat: string, keyword: string) => {
+    const lower = cat.toLowerCase().trim();
+    const kw = keyword.toLowerCase().trim();
+    if (kw === "veg") return lower === "veg";
+    return lower.includes(kw);
+  };
+
+  const priorityCategories = priorityCategoryKeywords
+    .map(kw => allCategories.find(c => matchCategory(c, kw)))
+    .filter(Boolean) as string[];
+
+  const remainingCategories = allCategories.filter(c => !priorityCategories.includes(c));
+
+  const finalDisplay = priorityCategories;
+  const showMoreButton = remainingCategories.length > 0;
 
   const handleAddToCart = (id: number, increment: boolean = true) => {
     const currentUser = useStore.getState().user;
@@ -954,10 +978,10 @@ function CustomerHome() {
               <AnimatePresence mode="wait">
                 <motion.div
                   key={currentBannerIndex}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
-                  transition={{ duration: 0.5 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
                   onClick={() => {
                     const banner = banners[currentBannerIndex];
                     if (banner.linkedItemIds && banner.linkedItemIds.length > 0) {
@@ -1008,7 +1032,7 @@ function CustomerHome() {
                <h2 className="font-heading font-bold text-lg">Category</h2>
                {showMoreButton && (
                  <Button variant="link" className="text-primary text-xs h-auto p-0" onClick={() => setLocation("/categories")}>
-                   View All
+                   View More
                  </Button>
                )}
             </div>
