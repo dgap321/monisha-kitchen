@@ -616,7 +616,7 @@ function LoginPage() {
                     >
                       {verifying ? "Verifying..." : "Verify & Login"}
                     </Button>
-                    <Button variant="ghost" className="w-full text-white/40 hover:text-white/60 h-auto p-0 text-xs" onClick={() => setStep("phone")}>
+                    <Button variant="ghost" className="w-full text-white/40 hover:text-foreground/60 h-auto p-0 text-xs" onClick={() => setStep("phone")}>
                       Change Mobile Number
                     </Button>
                   </motion.div>
@@ -668,7 +668,7 @@ function LoginPage() {
                     >
                       {merchantLoggingIn ? "Logging in..." : "Login"}
                     </Button>
-                    <Button variant="ghost" className="w-full text-white/40 hover:text-white/60 h-auto p-0 text-xs" onClick={() => setStep("phone")}>
+                    <Button variant="ghost" className="w-full text-white/40 hover:text-foreground/60 h-auto p-0 text-xs" onClick={() => setStep("phone")}>
                       Back to Customer Login
                     </Button>
                   </motion.div>
@@ -682,7 +682,7 @@ function LoginPage() {
           <button
             data-testid="button-merchant-login"
             onClick={() => setStep("merchant")}
-            className="mt-4 text-white/40 hover:text-white/70 text-xs flex items-center gap-1.5 transition-colors"
+            className="mt-4 text-white/40 hover:text-foreground/70 text-xs flex items-center gap-1.5 transition-colors"
           >
             <Store className="w-3 h-3" /> Merchant Login
           </button>
@@ -759,7 +759,7 @@ function MerchantNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-6 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto">
+    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-amber-100 to-amber-50 border-t border-amber-200 text-foreground px-6 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-lg">
       {navItems.map((item) => (
         <button
           key={item.label}
@@ -2125,20 +2125,20 @@ function MerchantDashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 pb-20 text-neutral-100 flex flex-col">
-       <div className="p-6 bg-neutral-900 sticky top-0 z-30 border-b border-neutral-800 flex justify-between items-center">
+    <div className="min-h-screen bg-amber-50 pb-20 text-foreground flex flex-col">
+       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 flex justify-between items-center">
          <div>
             <h1 className="font-heading font-bold text-xl">{settings.storeName}</h1>
             <p className="text-xs text-foreground/40 uppercase tracking-widest font-medium mt-1">Merchant Dashboard</p>
          </div>
          <div className="flex items-center gap-2">
            {!merchantLocationSet && (
-             <Button variant="outline" size="sm" className="h-8 border-neutral-700 bg-neutral-800 text-neutral-300 hover:bg-neutral-700 hover:text-white" onClick={handleGetStoreLocation} disabled={detectingStoreLocation} data-testid="button-get-store-location">
+             <Button variant="outline" size="sm" className="h-8 border-amber-200 bg-amber-100 text-foreground/70 hover:bg-amber-200 hover:text-foreground" onClick={handleGetStoreLocation} disabled={detectingStoreLocation} data-testid="button-get-store-location">
                <MapPin className="w-4 h-4 mr-1" />
                {detectingStoreLocation ? "Detecting..." : "Get Location"}
              </Button>
            )}
-           <Button variant="outline" size="sm" className="h-8 border-neutral-700 bg-neutral-800 text-neutral-300 hover:bg-neutral-700 hover:text-white" onClick={handleMerchantLogout}>
+           <Button variant="outline" size="sm" className="h-8 border-amber-200 bg-amber-100 text-foreground/70 hover:bg-amber-200 hover:text-foreground" onClick={handleMerchantLogout}>
              Logout
            </Button>
          </div>
@@ -2152,14 +2152,14 @@ function MerchantDashboard() {
           </div>
         ) : (
           sortedOrders.map((order: any) => (
-            <Card key={order.id} className="bg-neutral-800 border-neutral-700 text-neutral-100 overflow-hidden max-w-2xl">
-              <div className={cn("px-4 py-2 text-xs font-bold uppercase tracking-wider border-b border-dashed border-neutral-700 flex justify-between items-center", getStatusColor(order.status).replace("border-", ""))}>
+            <Card key={order.id} className="bg-amber-100 border-amber-200 text-foreground overflow-hidden max-w-2xl">
+              <div className={cn("px-4 py-2 text-xs font-bold uppercase tracking-wider border-b border-dashed border-amber-200 flex justify-between items-center", getStatusColor(order.status).replace("border-", ""))}>
                 <span>Order #{order.orderId}</span>
                 <span>{order.status.replace("_", " ")}</span>
               </div>
               <CardContent className="pt-4 space-y-4">
-                <div className="text-sm bg-neutral-900/50 p-3 rounded-lg border border-neutral-700">
-                   <p className="font-bold text-neutral-300 mb-1">Customer Details</p>
+                <div className="text-sm bg-amber-50/50 p-3 rounded-lg border border-amber-200">
+                   <p className="font-bold text-foreground/70 mb-1">Customer Details</p>
                    <p className="flex items-center gap-2"><span className="text-foreground/60 w-16">Name:</span> {order.customerName}</p>
                    <p className="flex items-center gap-2">
                      <span className="text-foreground/60 w-16">Phone:</span> 
@@ -2179,7 +2179,7 @@ function MerchantDashboard() {
                     </div>
                   ))}
                 </div>
-                <div className="border-t border-neutral-700 pt-3 flex justify-between font-bold">
+                <div className="border-t border-amber-200 pt-3 flex justify-between font-bold">
                    <span>Total</span>
                    <span>₹{order.total}</span>
                 </div>
@@ -2415,14 +2415,14 @@ function MerchantMenu() {
   if (menuLoading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen bg-neutral-900 pb-20 text-neutral-100 flex flex-col">
-       <div className="p-6 bg-neutral-900 sticky top-0 z-30 border-b border-neutral-800 flex justify-between items-center">
+    <div className="min-h-screen bg-amber-50 pb-20 text-foreground flex flex-col">
+       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 flex justify-between items-center">
          <h1 className="font-heading font-bold text-xl">Menu Management</h1>
          <div className="flex gap-2">
-            <Button variant="outline" size="icon" className="rounded-full border-neutral-700 bg-neutral-800 hover:bg-neutral-700" onClick={() => setIsCategoryOpen(true)}>
+            <Button variant="outline" size="icon" className="rounded-full border-amber-200 bg-amber-100 hover:bg-amber-200" onClick={() => setIsCategoryOpen(true)}>
               <ImageIcon className="w-5 h-5 text-blue-500" />
             </Button>
-            <Button variant="outline" size="icon" className="rounded-full border-neutral-700 bg-neutral-800 hover:bg-neutral-700" onClick={() => setIsImportOpen(true)}>
+            <Button variant="outline" size="icon" className="rounded-full border-amber-200 bg-amber-100 hover:bg-amber-200" onClick={() => setIsImportOpen(true)}>
               <FileSpreadsheet className="w-5 h-5 text-green-500" />
             </Button>
             <Button size="icon" className="rounded-full bg-primary hover:bg-primary/90" onClick={() => { resetForm(); setIsAddOpen(true); }}>
@@ -2440,7 +2440,7 @@ function MerchantMenu() {
           </div>
         ) : (
           menu.map((item: any) => (
-             <div key={item.id} className="bg-neutral-800 p-3 rounded-xl border border-neutral-700 flex gap-3" onClick={() => handleEdit(item)}>
+             <div key={item.id} className="bg-amber-100 p-3 rounded-xl border border-amber-200 flex gap-3" onClick={() => handleEdit(item)}>
                 <div className="w-20 h-20 rounded-lg bg-neutral-700 overflow-hidden shrink-0 relative group">
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover opacity-80" />
                   <div className="absolute inset-0 bg-black/50 hidden group-hover:flex items-center justify-center">
@@ -2474,45 +2474,45 @@ function MerchantMenu() {
       </div>
 
       <Dialog open={isAddOpen} onOpenChange={(open) => { if(!open) resetForm(); setIsAddOpen(open); }}>
-        <DialogContent className="bg-neutral-800 border-neutral-700 text-neutral-100 sm:max-w-[425px]">
+        <DialogContent className="bg-amber-100 border-amber-200 text-foreground sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>{editingItem ? "Edit Item" : "Add New Item"}</DialogTitle>
           </DialogHeader>
           <div className="grid gap-4 py-4 max-h-[60vh] overflow-y-auto">
             <div className="grid gap-2">
               <Label>Dish Name</Label>
-              <Input className="bg-neutral-900 border-neutral-700" value={newItem.name} onChange={e => setNewItem({...newItem, name: e.target.value})} />
+              <Input className="bg-amber-50 border-amber-200" value={newItem.name} onChange={e => setNewItem({...newItem, name: e.target.value})} />
             </div>
             <div className="grid gap-2">
               <Label>Dish Description</Label>
-              <Textarea className="bg-neutral-900 border-neutral-700" value={newItem.description} onChange={e => setNewItem({...newItem, description: e.target.value})} />
+              <Textarea className="bg-amber-50 border-amber-200" value={newItem.description} onChange={e => setNewItem({...newItem, description: e.target.value})} />
             </div>
             <div className="grid grid-cols-2 gap-4">
                <div className="grid gap-2">
                  <Label>Dish Price (INR)</Label>
-                 <Input type="number" className="bg-neutral-900 border-neutral-700" value={newItem.price} onChange={e => setNewItem({...newItem, price: Number(e.target.value)})} />
+                 <Input type="number" className="bg-amber-50 border-amber-200" value={newItem.price} onChange={e => setNewItem({...newItem, price: Number(e.target.value)})} />
                </div>
                <div className="grid gap-2">
                  <Label>Original Price (₹)</Label>
-                 <Input type="number" placeholder="Optional" className="bg-neutral-900 border-neutral-700" value={newItem.originalPrice || ""} onChange={e => setNewItem({...newItem, originalPrice: Number(e.target.value)})} />
+                 <Input type="number" placeholder="Optional" className="bg-amber-50 border-amber-200" value={newItem.originalPrice || ""} onChange={e => setNewItem({...newItem, originalPrice: Number(e.target.value)})} />
                </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
                 <div className="grid gap-2">
                     <Label>Dish Category</Label>
-                    <Input className="bg-neutral-900 border-neutral-700" value={newItem.category} onChange={e => setNewItem({...newItem, category: e.target.value})} />
+                    <Input className="bg-amber-50 border-amber-200" value={newItem.category} onChange={e => setNewItem({...newItem, category: e.target.value})} />
                 </div>
                 <div className="grid gap-2">
                     <Label>Dish Type</Label>
-                    <div className="flex bg-neutral-900 p-1 rounded-md border border-neutral-700">
+                    <div className="flex bg-amber-50 p-1 rounded-md border border-amber-200">
                       <button 
-                        className={cn("flex-1 text-xs font-bold py-1.5 rounded", newItem.isVeg ? "bg-green-700 text-white" : "text-foreground/40 hover:text-white")}
+                        className={cn("flex-1 text-xs font-bold py-1.5 rounded", newItem.isVeg ? "bg-green-700 text-white" : "text-foreground/40 hover:text-foreground")}
                         onClick={() => setNewItem({...newItem, isVeg: true})}
                       >
                         Veg
                       </button>
                       <button 
-                        className={cn("flex-1 text-xs font-bold py-1.5 rounded", !newItem.isVeg ? "bg-red-700 text-white" : "text-foreground/40 hover:text-white")}
+                        className={cn("flex-1 text-xs font-bold py-1.5 rounded", !newItem.isVeg ? "bg-red-700 text-white" : "text-foreground/40 hover:text-foreground")}
                         onClick={() => setNewItem({...newItem, isVeg: false})}
                       >
                         Non-Veg
@@ -2524,7 +2524,7 @@ function MerchantMenu() {
             <div className="grid gap-2">
                <Label>Photo Upload</Label>
                <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 border rounded overflow-hidden bg-neutral-900">
+                  <div className="w-16 h-16 border rounded overflow-hidden bg-amber-50">
                     {newItem.image && <img src={newItem.image} className="w-full h-full object-cover" />}
                   </div>
                   <div className="flex-1 space-y-2">
@@ -2535,7 +2535,7 @@ function MerchantMenu() {
                        className="hidden" 
                        onChange={handleImageUpload}
                      />
-                     <Button size="sm" variant="outline" className="w-full border-neutral-600 hover:bg-neutral-700" onClick={() => fileInputRef.current?.click()}>
+                     <Button size="sm" variant="outline" className="w-full border-neutral-600 hover:bg-amber-200" onClick={() => fileInputRef.current?.click()}>
                        <Upload className="w-4 h-4 mr-2" /> {newItem.image ? "Change Photo" : "Upload Photo"}
                      </Button>
                      {newItem.image && (
@@ -2554,7 +2554,7 @@ function MerchantMenu() {
       </Dialog>
 
       <Dialog open={isImportOpen} onOpenChange={setIsImportOpen}>
-        <DialogContent className="bg-neutral-800 border-neutral-700 text-neutral-100">
+        <DialogContent className="bg-amber-100 border-amber-200 text-foreground">
            <DialogHeader>
               <DialogTitle>Import Menu from Excel/CSV</DialogTitle>
               <CardDescription className="text-foreground/40">
@@ -2563,9 +2563,9 @@ function MerchantMenu() {
            </DialogHeader>
            
            <div className="space-y-4 py-4">
-              <div className="p-4 bg-neutral-900 rounded-lg border border-neutral-700 space-y-2">
-                 <h4 className="text-sm font-bold text-neutral-300">Format Required (Columns):</h4>
-                 <code className="block text-xs text-foreground/60 font-mono bg-black/30 p-2 rounded">
+              <div className="p-4 bg-amber-50 rounded-lg border border-amber-200 space-y-2">
+                 <h4 className="text-sm font-bold text-foreground/70">Format Required (Columns):</h4>
+                 <code className="block text-xs text-foreground/60 font-mono bg-amber-50 p-2 rounded">
                    Dish Name | Price | Description | Category | Type
                  </code>
                  <p className="text-xs text-foreground/60">Type can be "Veg" or "Non-Veg"</p>
@@ -2591,7 +2591,7 @@ function MerchantMenu() {
       </Dialog>
       
       <Dialog open={isCategoryOpen} onOpenChange={setIsCategoryOpen}>
-        <DialogContent className="bg-neutral-800 border-neutral-700 text-neutral-100 max-h-[80vh] overflow-y-auto">
+        <DialogContent className="bg-amber-100 border-amber-200 text-foreground max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Manage Categories</DialogTitle>
               <CardDescription className="text-foreground/40">
@@ -2601,7 +2601,7 @@ function MerchantMenu() {
             
             <div className="grid grid-cols-2 gap-4 py-4">
                {categories.map((cat) => (
-                   <div key={cat} className={cn("bg-neutral-900 p-3 rounded-lg border flex flex-col items-center gap-2", visibleCategories.includes(cat) ? "border-primary" : "border-neutral-700")}>
+                   <div key={cat} className={cn("bg-amber-50 p-3 rounded-lg border flex flex-col items-center gap-2", visibleCategories.includes(cat) ? "border-primary" : "border-amber-200")}>
                        <div className="w-full flex justify-between items-start mb-1">
                           <span className="text-[10px] text-foreground/60">{visibleCategories.includes(cat) ? "Shown" : "Hidden"}</span>
                           <input 
@@ -2612,7 +2612,7 @@ function MerchantMenu() {
                           />
                        </div>
                        
-                       <div className="w-full aspect-square bg-neutral-800 rounded overflow-hidden">
+                       <div className="w-full aspect-square bg-amber-100 rounded overflow-hidden">
                            {categoryImages[cat] ? (
                                <img src={categoryImages[cat]} alt={cat} className="w-full h-full object-cover" />
                            ) : (
@@ -2705,7 +2705,7 @@ function MerchantSettings() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-900 pb-20 text-neutral-100 flex flex-col">
+    <div className="min-h-screen bg-amber-50 pb-20 text-foreground flex flex-col">
        <StoreLocationPicker
          open={showLocationPicker}
          onClose={() => setShowLocationPicker(false)}
@@ -2714,20 +2714,20 @@ function MerchantSettings() {
          radiusKm={settings.deliveryRadiusKm}
          onSave={handleSaveStoreLocation}
        />
-       <div className="p-6 bg-neutral-900 sticky top-0 z-30 border-b border-neutral-800">
+       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200">
          <h1 className="font-heading font-bold text-xl">Store Settings</h1>
       </div>
       
       <div className="flex-1 overflow-y-auto p-6 space-y-8">
          <div className="space-y-6">
-            <h2 className="text-lg font-bold border-b border-neutral-700 pb-2">Store Info</h2>
+            <h2 className="text-lg font-bold border-b border-amber-200 pb-2">Store Info</h2>
              <div className="space-y-2">
                 <Label>Store Name</Label>
-                <Input className="bg-neutral-800 border-neutral-700" value={settings.storeName} onChange={(e) => updateSettings({ storeName: e.target.value })} />
+                <Input className="bg-amber-100 border-amber-200" value={settings.storeName} onChange={(e) => updateSettings({ storeName: e.target.value })} />
              </div>
              
              <div className="space-y-4 pt-2">
-                <div className="flex items-center justify-between bg-neutral-800 p-4 rounded-lg border border-neutral-700">
+                <div className="flex items-center justify-between bg-amber-100 p-4 rounded-lg border border-amber-200">
                    <div>
                       <Label className="text-base font-bold">Store Status</Label>
                       <p className="text-xs text-foreground/40 mt-1">
@@ -2751,7 +2751,7 @@ function MerchantSettings() {
                       <Label>Open Time</Label>
                       <Input 
                         type="time" 
-                        className="bg-neutral-800 border-neutral-700" 
+                        className="bg-amber-100 border-amber-200" 
                         value={settings.openTime} 
                         onChange={(e) => updateSettings({ openTime: e.target.value })} 
                       />
@@ -2760,7 +2760,7 @@ function MerchantSettings() {
                       <Label>Close Time</Label>
                       <Input 
                         type="time" 
-                        className="bg-neutral-800 border-neutral-700" 
+                        className="bg-amber-100 border-amber-200" 
                         value={settings.closeTime} 
                         onChange={(e) => updateSettings({ closeTime: e.target.value })} 
                       />
@@ -2771,7 +2771,7 @@ function MerchantSettings() {
                   <div className="space-y-2">
                       <Label>Next Opening Message</Label>
                       <Input 
-                        className="bg-neutral-800 border-neutral-700" 
+                        className="bg-amber-100 border-amber-200" 
                         placeholder="e.g. We open at 5 PM today"
                         value={settings.nextOpenMessage} 
                         onChange={(e) => updateSettings({ nextOpenMessage: e.target.value })} 
@@ -2783,19 +2783,19 @@ function MerchantSettings() {
 
              <div className="space-y-2">
                 <Label>UPI ID (For Payments)</Label>
-                <Input className="bg-neutral-800 border-neutral-700" value={settings.upiId} onChange={(e) => updateSettings({ upiId: e.target.value })} />
+                <Input className="bg-amber-100 border-amber-200" value={settings.upiId} onChange={(e) => updateSettings({ upiId: e.target.value })} />
                 <p className="text-xs text-foreground/60">Customers will send payments to this ID.</p>
              </div>
              
              <div className="space-y-2">
                 <Label>Store Location & Delivery Radius</Label>
-                <div className="bg-neutral-800 rounded-lg p-3 space-y-2">
+                <div className="bg-amber-100 rounded-lg p-3 space-y-2">
                   <div className="flex items-center justify-between">
                     <div className="text-sm text-foreground/40">
                       <p>Lat: {settings.locationLat.toFixed(4)}, Lng: {settings.locationLng.toFixed(4)}</p>
                       <p>Radius: {settings.deliveryRadiusKm} km</p>
                     </div>
-                    <Button size="sm" variant="outline" className="border-neutral-700" onClick={() => setShowLocationPicker(true)}>
+                    <Button size="sm" variant="outline" className="border-amber-200" onClick={() => setShowLocationPicker(true)}>
                       <MapPin className="w-4 h-4 mr-1" /> Update
                     </Button>
                   </div>
@@ -2804,10 +2804,10 @@ function MerchantSettings() {
          </div>
 
          <div className="space-y-6">
-            <h2 className="text-lg font-bold border-b border-neutral-700 pb-2">App Banners</h2>
+            <h2 className="text-lg font-bold border-b border-amber-200 pb-2">App Banners</h2>
             <div className="space-y-6">
               {banners.map((banner: any, index: number) => (
-                <div key={banner.id} className="bg-neutral-800 p-4 rounded-xl border border-neutral-700 space-y-4">
+                <div key={banner.id} className="bg-amber-100 p-4 rounded-xl border border-amber-200 space-y-4">
                    <div className="flex justify-between items-center">
                      <h3 className="font-bold text-sm text-primary">Banner {index + 1}</h3>
                      <div className={cn("w-4 h-4 rounded-full bg-gradient-to-r", banner.gradient)}></div>
@@ -2816,7 +2816,7 @@ function MerchantSettings() {
                    <div className="grid gap-2">
                       <Label className="text-xs">Title</Label>
                       <Input 
-                        className="bg-neutral-900 border-neutral-700 h-8 text-sm" 
+                        className="bg-amber-50 border-amber-200 h-8 text-sm" 
                         value={banner.title} 
                         onChange={(e) => updateBanner(banner.id, { title: e.target.value })} 
                       />
@@ -2825,7 +2825,7 @@ function MerchantSettings() {
                    <div className="grid gap-2">
                       <Label className="text-xs">Subtitle</Label>
                       <Input 
-                        className="bg-neutral-900 border-neutral-700 h-8 text-sm" 
+                        className="bg-amber-50 border-amber-200 h-8 text-sm" 
                         value={banner.subtitle} 
                         onChange={(e) => updateBanner(banner.id, { subtitle: e.target.value })} 
                       />
@@ -2834,7 +2834,7 @@ function MerchantSettings() {
                    <div className="grid gap-2">
                       <Label className="text-xs">Color Gradient</Label>
                       <select 
-                        className="bg-neutral-900 border border-neutral-700 rounded-md h-8 text-sm px-2 text-neutral-200"
+                        className="bg-amber-50 border border-amber-200 rounded-md h-8 text-sm px-2 text-foreground/80"
                         value={banner.gradient}
                         onChange={(e) => updateBanner(banner.id, { gradient: e.target.value })}
                       >
@@ -2875,7 +2875,7 @@ function MerchantSettings() {
                         </div>
                       ) : (
                         <div 
-                          className="w-full h-20 border-2 border-dashed border-neutral-700 rounded-lg flex flex-col items-center justify-center text-foreground/60 hover:text-neutral-300 hover:border-neutral-500 cursor-pointer transition-colors"
+                          className="w-full h-20 border-2 border-dashed border-amber-200 rounded-lg flex flex-col items-center justify-center text-foreground/60 hover:text-foreground/70 hover:border-neutral-500 cursor-pointer transition-colors"
                           onClick={() => { setUploadingBannerId(banner.id); bannerImageRef.current?.click(); }}
                         >
                            <ImageIcon className="w-5 h-5 mb-1" />
@@ -2905,17 +2905,17 @@ function MerchantSettings() {
          </div>
 
          <Dialog open={!!selectedBannerId} onOpenChange={(open) => !open && setSelectedBannerId(null)}>
-            <DialogContent className="bg-neutral-800 border-neutral-700 text-neutral-100 max-h-[80vh] overflow-y-auto flex flex-col">
+            <DialogContent className="bg-amber-100 border-amber-200 text-foreground max-h-[80vh] overflow-y-auto flex flex-col">
                <DialogHeader>
                   <DialogTitle>Link Items to Banner</DialogTitle>
                   <CardDescription>Select items that will show when this banner is clicked.</CardDescription>
                </DialogHeader>
                
-               <div className="sticky top-0 bg-neutral-800 z-10 py-2">
+               <div className="sticky top-0 bg-amber-100 z-10 py-2">
                   <div className="relative">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
                     <Input 
-                      className="pl-9 bg-neutral-900 border-neutral-700 text-sm" 
+                      className="pl-9 bg-amber-50 border-amber-200 text-sm" 
                       placeholder="Search items..." 
                       value={itemSearchQuery}
                       onChange={(e) => setItemSearchQuery(e.target.value)}
@@ -2928,7 +2928,7 @@ function MerchantSettings() {
                     filteredMenu.map((item: any) => {
                        const isSelected = banners.find((b: any) => b.id === selectedBannerId)?.linkedItemIds?.includes(item.id);
                        return (
-                          <div key={item.id} className="flex items-center space-x-3 p-2 rounded hover:bg-neutral-700">
+                          <div key={item.id} className="flex items-center space-x-3 p-2 rounded hover:bg-amber-200">
                              <input 
                                type="checkbox" 
                                checked={!!isSelected}
@@ -2963,7 +2963,7 @@ function MerchantSettings() {
             </DialogContent>
          </Dialog>
 
-         <div className="p-4 bg-neutral-800 rounded-xl border border-neutral-700 mt-8">
+         <div className="p-4 bg-amber-100 rounded-xl border border-amber-200 mt-8">
             <h3 className="font-bold mb-2 text-primary">Mock Verification</h3>
             <p className="text-sm text-foreground/40">
               In a real app, UPI payments would be verified via bank SMS parsing or Payment Gateway Webhooks. 
@@ -3005,14 +3005,14 @@ function MerchantCustomers() {
   );
 
   return (
-    <div className="min-h-screen bg-neutral-900 pb-20 text-neutral-100 flex flex-col">
-       <div className="p-6 bg-neutral-900 sticky top-0 z-30 border-b border-neutral-800 space-y-4">
+    <div className="min-h-screen bg-amber-50 pb-20 text-foreground flex flex-col">
+       <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200 space-y-4">
          <h1 className="font-heading font-bold text-xl">Customers</h1>
          
          <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/60" />
             <Input 
-              className="pl-9 bg-neutral-800 border-neutral-700 text-sm h-10" 
+              className="pl-9 bg-amber-100 border-amber-200 text-sm h-10" 
               placeholder="Search by phone number..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -3028,7 +3028,7 @@ function MerchantCustomers() {
           </div>
         ) : (
           filteredCustomers.map((customer: any, idx: number) => (
-             <div key={idx} className="bg-neutral-800 p-4 rounded-xl border border-neutral-700 flex items-start gap-4">
+             <div key={idx} className="bg-amber-100 p-4 rounded-xl border border-amber-200 flex items-start gap-4">
                 <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold shrink-0">
                   {customer.name?.[0] || "?"}
                 </div>
