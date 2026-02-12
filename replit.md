@@ -41,7 +41,7 @@ Full-stack food ordering app with dual interfaces:
 - Order statuses: pending_payment → preparing → ready → on_the_way → delivered (also rejected/refunded)
 - Pre-order allowed 30 min before store opens
 - Excel/CSV menu import with "Special" word removal from categories
-- Image compression: 300x300px max, JPEG 0.5 quality
+- Image compression: 1200x1200px max, JPEG 0.85 quality
 - Contact: Phone 7013849563, FSSAI License 20119038001047
 
 ## Firebase Integration
@@ -72,6 +72,14 @@ Full-stack food ordering app with dual interfaces:
 - Token stored in Zustand and sent automatically via API helpers
 
 ## Recent Changes
+- 2026-02-12: Added customer review system
+  - Reviews table: orderId, menuItemId, customerPhone, customerName, stars (1-5), comment
+  - Customer can rate delivered orders with star rating + comment (one review per item per order)
+  - Average star ratings shown on DishCard (★ 4.5 (12) format)
+  - Merchant Reviews page: view all reviews, delete individual reviews
+  - Server-side validation: stars 1-5, order must be delivered, customer must own order, no duplicates
+  - API: GET /api/reviews, GET /api/reviews/item/:id, GET /api/reviews/order/:id, POST /api/reviews, DELETE /api/reviews/:id (merchant only)
+- 2026-02-12: Replaced login background GIF with MP4 video (autoplay, muted, no loop)
 - 2026-02-10: Added real location features
   - Customer: Browser Geolocation API for real GPS coordinates (replaces mock)
   - Merchant: Store location picker with Leaflet map + OpenStreetMap + Nominatim address search

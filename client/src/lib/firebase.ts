@@ -49,7 +49,7 @@ export async function sendOtp(phoneNumber: string, recaptchaVerifier: RecaptchaV
   return signInWithPhoneNumber(auth, fullNumber, recaptchaVerifier);
 }
 
-export async function compressAndUploadImage(file: File, path: string, maxWidth = 300, maxHeight = 300, quality = 0.5): Promise<string> {
+export async function compressAndUploadImage(file: File, path: string, maxWidth = 1200, maxHeight = 1200, quality = 0.85): Promise<string> {
   const storage = getFirebaseStorage();
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -60,16 +60,10 @@ export async function compressAndUploadImage(file: File, path: string, maxWidth 
         let width = img.width;
         let height = img.height;
 
-        if (width > height) {
-          if (width > maxWidth) {
-            height *= maxWidth / width;
-            width = maxWidth;
-          }
-        } else {
-          if (height > maxHeight) {
-            width *= maxHeight / height;
-            height = maxHeight;
-          }
+        if (width > maxWidth || height > maxHeight) {
+          const ratio = Math.min(maxWidth / width, maxHeight / height);
+          width = Math.round(width * ratio);
+          height = Math.round(height * ratio);
         }
 
         canvas.width = width;
