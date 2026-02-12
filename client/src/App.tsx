@@ -735,7 +735,7 @@ function BottomNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-orange-100 px-4 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-[0_-4px_20px_rgba(0,0,0,0.08)] rounded-t-2xl">
+    <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-orange-100 px-4 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-[0_-4px_20px_rgba(0,0,0,0.08)] rounded-t-2xl" style={{ transform: "translate3d(0,0,0)" }}>
       {navItems.map((item) => (
         <button
           key={item.label}
@@ -772,7 +772,7 @@ function MerchantNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-amber-100 to-amber-50 border-t border-amber-200 text-foreground px-6 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-lg rounded-t-2xl">
+    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-amber-100 to-amber-50 border-t border-amber-200 text-foreground px-6 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-lg rounded-t-2xl" style={{ transform: "translate3d(0,0,0)" }}>
       {navItems.map((item) => (
         <button
           key={item.label}
