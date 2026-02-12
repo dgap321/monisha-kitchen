@@ -8,7 +8,7 @@ import {
 } from "@/lib/api";
 import { Toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
-import { Home, ShoppingBag, Store, ListOrdered, Settings, Plus, Minus, Trash2, MapPin, CheckCircle, XCircle, ChevronRight, Upload, Phone, ArrowRight, User, Users, FileText, HelpCircle, LogOut, Utensils, IndianRupee, Image as ImageIcon, Search, FileSpreadsheet, Download, Shield, RefreshCcw, Ban, Check, Eye, EyeOff } from "lucide-react";
+import { Home, ShoppingBag, Store, ListOrdered, Settings, Plus, Minus, Trash2, MapPin, CheckCircle, XCircle, ChevronRight, Upload, Phone, ArrowRight, User, Users, FileText, HelpCircle, LogOut, Utensils, IndianRupee, Image as ImageIcon, Search, FileSpreadsheet, Download, Shield, RefreshCcw, Ban, Check, Eye, EyeOff, X } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -85,24 +85,24 @@ function DishCard({ item, handleAddToCart }: { item: any; handleAddToCart: (id: 
     <motion.div 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="bg-white rounded-2xl p-3 shadow-sm border border-neutral-100 flex gap-4 overflow-hidden"
+      className="bg-white rounded-2xl p-3 shadow-md border border-orange-100/60 flex gap-4 overflow-hidden hover:shadow-lg transition-shadow"
     >
       <div className="relative shrink-0">
-        <div className="w-28 h-28 rounded-xl bg-neutral-100 overflow-hidden">
+        <div className="w-28 h-28 rounded-xl bg-orange-50 overflow-hidden">
           <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
         </div>
         
         {quantity > 0 ? (
-           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-8 flex items-center shadow-md bg-white rounded-lg border border-neutral-200 overflow-hidden">
+           <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-8 flex items-center shadow-md bg-primary rounded-lg overflow-hidden">
              <button 
-               className="h-full px-2 hover:bg-neutral-100 text-primary flex items-center justify-center"
+               className="h-full px-2 hover:bg-white/10 text-white flex items-center justify-center"
                onClick={(e) => { e.stopPropagation(); handleAddToCart(item.id, false); }}
              >
                <Minus className="w-3 h-3 font-bold" />
              </button>
-             <span className="text-xs font-bold w-6 text-center text-primary">{quantity}</span>
+             <span className="text-xs font-bold w-6 text-center text-white">{quantity}</span>
              <button 
-               className="h-full px-2 hover:bg-neutral-100 text-primary flex items-center justify-center"
+               className="h-full px-2 hover:bg-white/10 text-white flex items-center justify-center"
                onClick={(e) => { e.stopPropagation(); handleAddToCart(item.id, true); }}
              >
                <Plus className="w-3 h-3 font-bold" />
@@ -111,7 +111,7 @@ function DishCard({ item, handleAddToCart }: { item: any; handleAddToCart: (id: 
         ) : (
           <Button 
             size="sm" 
-            className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-8 px-6 shadow-md bg-white text-primary hover:bg-neutral-50 hover:text-primary font-bold border border-neutral-200 uppercase text-xs"
+            className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-8 px-6 shadow-md bg-primary text-white hover:bg-primary/90 font-bold border-none uppercase text-xs"
             onClick={(e) => { e.stopPropagation(); handleAddToCart(item.id, true); }}
           >
             ADD
@@ -124,8 +124,8 @@ function DishCard({ item, handleAddToCart }: { item: any; handleAddToCart: (id: 
             <div className={cn("w-full h-full rounded-full", item.isVeg ? "bg-green-600" : "bg-red-600")}></div>
           </div>
         </div>
-        <h3 className="font-bold text-neutral-800 mt-1 line-clamp-1">{item.name}</h3>
-        <p className="text-sm font-bold text-neutral-900 mt-2">₹{item.price}</p>
+        <h3 className="font-bold text-foreground mt-1 line-clamp-1">{item.name}</h3>
+        <p className="text-sm font-bold text-primary mt-2">₹{item.price}</p>
         
         <div className="relative mt-1">
           <p className={cn("text-xs text-muted-foreground leading-relaxed", !isExpanded && "line-clamp-2")}>
@@ -134,7 +134,7 @@ function DishCard({ item, handleAddToCart }: { item: any; handleAddToCart: (id: 
           {item.description && item.description.length > 60 && (
              <button 
                onClick={() => setIsExpanded(!isExpanded)} 
-               className="text-[10px] font-bold text-neutral-500 hover:text-primary mt-0.5 flex items-center gap-0.5"
+               className="text-[10px] font-bold text-primary/70 hover:text-primary mt-0.5 flex items-center gap-0.5"
              >
                {isExpanded ? "Show less" : "More"}
                <ChevronRight className={cn("w-3 h-3 transition-transform", isExpanded ? "-rotate-90" : "rotate-90")} />
@@ -223,10 +223,10 @@ function StoreLocationPicker({ open, onClose, initialLat, initialLng, radiusKm, 
     <div className="fixed inset-0 z-[60] bg-black/70 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl w-full max-w-lg max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="p-4 border-b">
-          <h2 className="text-lg font-bold text-neutral-900 flex items-center gap-2">
+          <h2 className="text-lg font-bold text-foreground flex items-center gap-2">
             <MapPin className="w-5 h-5 text-primary" /> Set Store Location
           </h2>
-          <p className="text-sm text-neutral-500 mt-1">Search your shop address or tap the map to pin your location.</p>
+          <p className="text-sm text-foreground/60 mt-1">Search your shop address or tap the map to pin your location.</p>
         </div>
 
         <div className="p-4 space-y-3">
@@ -245,11 +245,11 @@ function StoreLocationPicker({ open, onClose, initialLat, initialLng, radiusKm, 
           </div>
 
           {searchResults.length > 0 && (
-            <div className="bg-neutral-50 border rounded-lg max-h-40 overflow-y-auto">
+            <div className="bg-orange-50 border border-orange-200 rounded-lg max-h-40 overflow-y-auto">
               {searchResults.map((result: any, i: number) => (
                 <button
                   key={i}
-                  className="w-full text-left px-3 py-2 text-sm hover:bg-neutral-100 border-b last:border-b-0 transition-colors"
+                  className="w-full text-left px-3 py-2 text-sm hover:bg-orange-100 border-b last:border-b-0 transition-colors"
                   onClick={() => handleSelectResult(result)}
                 >
                   <span className="line-clamp-2">{result.display_name}</span>
@@ -282,10 +282,10 @@ function StoreLocationPicker({ open, onClose, initialLat, initialLng, radiusKm, 
               onChange={(e) => setRadius(Number(e.target.value))}
               className="w-20"
             />
-            <span className="text-sm text-neutral-500">km</span>
+            <span className="text-sm text-foreground/60">km</span>
           </div>
 
-          <div className="bg-neutral-50 rounded-lg p-3 text-xs text-neutral-600 space-y-1">
+          <div className="bg-orange-50 rounded-lg p-3 text-xs text-foreground/70 space-y-1">
             <p><span className="font-medium">Lat:</span> {lat.toFixed(6)}, <span className="font-medium">Lng:</span> {lng.toFixed(6)}</p>
             <p className="text-green-600 font-medium">Green circle = delivery zone ({radius} km)</p>
           </div>
@@ -366,7 +366,7 @@ function ProfileSetupPage() {
   const isEditing = !!(user?.name && user?.address);
 
   return (
-    <div className="min-h-screen bg-neutral-50 flex flex-col p-6 space-y-6 overflow-y-auto">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 flex flex-col p-6 space-y-6 overflow-y-auto">
       <div className="text-center space-y-2 pt-8">
         <div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
            <User className="w-10 h-10 text-primary" />
@@ -389,8 +389,8 @@ function ProfileSetupPage() {
 
           <div className="space-y-2">
             <Label>Location</Label>
-            <div className="p-4 bg-neutral-100 rounded-lg border border-dashed border-neutral-300 flex items-center justify-between">
-               <div className="flex items-center gap-2 text-sm text-neutral-600">
+            <div className="p-4 bg-orange-50 rounded-lg border border-dashed border-orange-200 flex items-center justify-between">
+               <div className="flex items-center gap-2 text-sm text-foreground/70">
                  <MapPin className="w-4 h-4 text-primary" />
                  {location ? <span className="text-green-600 font-medium">Location Set</span> : <span>Location not set</span>}
                </div>
@@ -529,19 +529,22 @@ function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col relative overflow-hidden bg-[#8B0000] font-sans items-center justify-center">
-      <div className="absolute inset-0 z-0">
-         <img src="/assets/login-bg-3.png" className="w-full h-full object-cover" alt="Monisha Kitchen Login" />
-         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/20" /> 
-      </div>
+    <div className="min-h-screen relative flex items-center justify-center font-sans">
+      <img
+        src="/assets/login-bg.gif"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+      />
 
-      <div className="w-full max-w-sm z-10 mb-20 px-6">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white/5 backdrop-blur-sm border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.2)] rounded-2xl overflow-hidden"
-          >
-            <CardContent className="p-6 pt-8">
+      <div className="relative z-10 w-full max-w-sm px-6 flex flex-col items-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+          className="w-full"
+        >
+          <div className="bg-black/50 backdrop-blur-lg border border-white/15 shadow-2xl rounded-2xl overflow-hidden">
+            <CardContent className="p-6">
               <AnimatePresence mode="wait">
                 {step === "phone" ? (
                   <motion.div
@@ -549,30 +552,29 @@ function LoginPage() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: 20 }}
-                    className="space-y-6"
+                    transition={{ duration: 0.3 }}
+                    className="space-y-4"
                   >
-                    <div className="space-y-2 text-center mb-6">
-                      <h3 className="text-[#FFD700] text-xl font-heading font-bold drop-shadow-sm">Welcome Back</h3>
-                      <p className="text-white/80 text-xs">Login to continue ordering</p>
+                    <div className="text-center mb-3">
+                      <h3 className="text-white text-lg font-semibold">Welcome</h3>
+                      <p className="text-white/50 text-xs mt-1">Enter your mobile number to continue</p>
                     </div>
 
-                    <div className="space-y-2">
-                      <div className="flex gap-3">
-                        <div className="flex items-center justify-center px-3 border border-[#FFD700]/30 rounded-lg bg-black/30 text-[#FFD700] font-medium text-sm shadow-inner">
-                          +91
-                        </div>
-                        <Input 
-                          placeholder="Mobile Number" 
-                          type="tel" 
-                          maxLength={10}
-                          value={phoneNumber} 
-                          onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
-                          className="flex-1 bg-black/30 border-[#FFD700]/30 text-white placeholder:text-white/40 focus-visible:ring-[#FFD700] h-12 rounded-lg shadow-inner text-lg tracking-wide"
-                        />
+                    <div className="flex gap-2">
+                      <div className="flex items-center justify-center px-3 border border-[#FFD700]/30 rounded-xl bg-[#FFD700]/10 text-[#FFD700] font-semibold text-sm">
+                        +91
                       </div>
+                      <Input 
+                        placeholder="Mobile Number" 
+                        type="tel" 
+                        maxLength={10}
+                        value={phoneNumber} 
+                        onChange={(e) => setPhoneNumber(e.target.value.replace(/\D/g, ''))}
+                        className="flex-1 bg-white/10 border-white/15 text-white placeholder:text-white/40 focus-visible:ring-[#FFD700]/50 focus-visible:border-[#FFD700]/30 h-12 rounded-xl text-lg tracking-widest"
+                      />
                     </div>
                     <Button 
-                      className="w-full font-bold h-12 bg-gradient-to-r from-[#FFD700] to-[#FDB931] text-[#8B0000] hover:brightness-110 shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wider text-sm transition-all active:scale-[0.98]" 
+                      className="w-full font-bold h-12 bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFD700] text-[#5C0000] hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] shadow-lg rounded-xl uppercase tracking-wider text-sm" 
                       onClick={handleSendOtp}
                       disabled={sending}
                     >
@@ -586,36 +588,35 @@ function LoginPage() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="space-y-6"
+                    transition={{ duration: 0.3 }}
+                    className="space-y-4"
                   >
-                    <div className="space-y-4 flex flex-col items-center">
-                      <div className="text-center w-full mb-2">
-                         <Label className="text-[#FFD700] text-lg font-bold font-heading">Verification Code</Label>
-                         <p className="text-xs text-white/70 mt-1">We sent a code to +91 {phoneNumber}</p>
-                      </div>
-                      
-                      <div className="flex justify-center w-full py-2">
-                        <InputOTP maxLength={6} value={otp} onChange={setOtp}>
-                          <InputOTPGroup className="gap-2">
-                            {[0, 1, 2, 3, 4, 5].map((i) => (
-                              <InputOTPSlot 
-                                key={i} 
-                                index={i} 
-                                className="bg-black/30 border border-[#FFD700]/40 text-[#FFD700] h-11 w-10 text-lg font-bold rounded-lg shadow-inner ring-offset-[#8B0000] focus:border-[#FFD700] focus:ring-1 focus:ring-[#FFD700]"
-                              />
-                            ))}
-                          </InputOTPGroup>
-                        </InputOTP>
-                      </div>
+                    <div className="text-center mb-2">
+                      <h3 className="text-white text-lg font-semibold">Verification Code</h3>
+                      <p className="text-xs text-white/50 mt-1">Sent to +91 {phoneNumber}</p>
+                    </div>
+                    
+                    <div className="flex justify-center py-2">
+                      <InputOTP maxLength={6} value={otp} onChange={setOtp}>
+                        <InputOTPGroup className="gap-2">
+                          {[0, 1, 2, 3, 4, 5].map((i) => (
+                            <InputOTPSlot 
+                              key={i} 
+                              index={i} 
+                              className="bg-white/10 border border-white/20 text-[#FFD700] h-12 w-10 text-lg font-bold rounded-xl focus:border-[#FFD700]/50 focus:ring-1 focus:ring-[#FFD700]/30"
+                            />
+                          ))}
+                        </InputOTPGroup>
+                      </InputOTP>
                     </div>
                     <Button 
-                      className="w-full font-bold h-12 bg-gradient-to-r from-[#FFD700] to-[#FDB931] text-[#8B0000] hover:brightness-110 shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wider text-sm transition-all active:scale-[0.98]" 
+                      className="w-full font-bold h-12 bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFD700] text-[#5C0000] hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] shadow-lg rounded-xl uppercase tracking-wider text-sm" 
                       onClick={handleVerifyOtp}
                       disabled={verifying}
                     >
-                      {verifying ? "Verifying..." : "Verify Login"}
+                      {verifying ? "Verifying..." : "Verify & Login"}
                     </Button>
-                    <Button variant="ghost" className="w-full text-[#FFD700]/70 hover:text-[#FFD700] hover:bg-white/5 h-auto p-0 text-xs mt-2" onClick={() => setStep("phone")}>
+                    <Button variant="ghost" className="w-full text-white/40 hover:text-white/60 h-auto p-0 text-xs" onClick={() => setStep("phone")}>
                       Change Mobile Number
                     </Button>
                   </motion.div>
@@ -625,11 +626,12 @@ function LoginPage() {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     exit={{ opacity: 0, x: -20 }}
-                    className="space-y-5"
+                    transition={{ duration: 0.3 }}
+                    className="space-y-4"
                   >
-                    <div className="text-center mb-4">
-                      <h3 className="text-[#FFD700] text-xl font-heading font-bold drop-shadow-sm">Merchant Login</h3>
-                      <p className="text-white/80 text-xs">Access the dashboard</p>
+                    <div className="text-center mb-2">
+                      <h3 className="text-white text-lg font-semibold">Merchant Login</h3>
+                      <p className="text-white/50 text-xs mt-1">Access your dashboard</p>
                     </div>
                     <div className="space-y-3">
                       <Input
@@ -637,7 +639,7 @@ function LoginPage() {
                         placeholder="Username"
                         value={merchantUsername}
                         onChange={(e) => setMerchantUsername(e.target.value)}
-                        className="bg-black/30 border-[#FFD700]/30 text-white placeholder:text-white/40 focus-visible:ring-[#FFD700] h-12 rounded-lg shadow-inner"
+                        className="bg-white/10 border-white/15 text-white placeholder:text-white/40 focus-visible:ring-[#FFD700]/50 focus-visible:border-[#FFD700]/30 h-12 rounded-xl"
                       />
                       <div className="relative">
                         <Input
@@ -646,13 +648,13 @@ function LoginPage() {
                           type={showMerchantPassword ? "text" : "password"}
                           value={merchantPassword}
                           onChange={(e) => setMerchantPassword(e.target.value)}
-                          className="bg-black/30 border-[#FFD700]/30 text-white placeholder:text-white/40 focus-visible:ring-[#FFD700] h-12 rounded-lg shadow-inner pr-12"
+                          className="bg-white/10 border-white/15 text-white placeholder:text-white/40 focus-visible:ring-[#FFD700]/50 focus-visible:border-[#FFD700]/30 h-12 rounded-xl pr-12"
                         />
                         <button
                           type="button"
                           data-testid="button-toggle-password"
                           onClick={() => setShowMerchantPassword(!showMerchantPassword)}
-                          className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 hover:text-white/80 transition-colors"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-[#FFD700]"
                         >
                           {showMerchantPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                         </button>
@@ -660,30 +662,33 @@ function LoginPage() {
                     </div>
                     <Button
                       data-testid="button-merchant-submit"
-                      className="w-full font-bold h-12 bg-gradient-to-r from-[#FFD700] to-[#FDB931] text-[#8B0000] hover:brightness-110 shadow-lg shadow-orange-900/20 rounded-lg uppercase tracking-wider text-sm transition-all active:scale-[0.98]"
+                      className="w-full font-bold h-12 bg-gradient-to-r from-[#FFD700] via-[#FDB931] to-[#FFD700] text-[#5C0000] hover:shadow-[0_0_20px_rgba(255,215,0,0.3)] shadow-lg rounded-xl uppercase tracking-wider text-sm"
                       onClick={handleMerchantLogin}
                       disabled={merchantLoggingIn}
                     >
                       {merchantLoggingIn ? "Logging in..." : "Login"}
                     </Button>
-                    <Button variant="ghost" className="w-full text-[#FFD700]/70 hover:text-[#FFD700] hover:bg-white/5 h-auto p-0 text-xs mt-2" onClick={() => setStep("phone")}>
+                    <Button variant="ghost" className="w-full text-white/40 hover:text-white/60 h-auto p-0 text-xs" onClick={() => setStep("phone")}>
                       Back to Customer Login
                     </Button>
                   </motion.div>
                 )}
               </AnimatePresence>
             </CardContent>
-          </motion.div>
+          </div>
+        </motion.div>
 
-          {step !== "merchant" && (
-            <button
-              data-testid="button-merchant-login"
-              onClick={() => setStep("merchant")}
-              className="mt-4 text-white/40 hover:text-white/70 text-xs transition-colors"
-            >
-              Merchant Login
-            </button>
-          )}
+        {step !== "merchant" && (
+          <button
+            data-testid="button-merchant-login"
+            onClick={() => setStep("merchant")}
+            className="mt-4 text-white/40 hover:text-white/70 text-xs flex items-center gap-1.5 transition-colors"
+          >
+            <Store className="w-3 h-3" /> Merchant Login
+          </button>
+        )}
+
+        <p className="mt-3 text-white/25 text-[10px] tracking-wider">FSSAI: 20119038001047</p>
       </div>
     </div>
   );
@@ -718,25 +723,25 @@ function BottomNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-background border-t border-border px-4 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto">
+    <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-lg border-t border-orange-100 px-4 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
       {navItems.map((item) => (
         <button
           key={item.label}
           onClick={() => setLocation(item.path)}
           className={cn(
-            "flex flex-col items-center gap-1 transition-colors relative min-w-[50px]",
-            location === item.path ? "text-primary" : "text-muted-foreground hover:text-foreground"
+            "flex flex-col items-center gap-1 transition-all relative min-w-[50px]",
+            location === item.path ? "text-primary scale-105" : "text-muted-foreground hover:text-primary/70"
           )}
         >
           <div className="relative">
             <item.icon className={cn("w-6 h-6", location === item.path && "fill-current")} />
             {item.badge ? (
-              <span className="absolute -top-1.5 -right-2 bg-primary text-primary-foreground text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[16px] flex justify-center">
+              <span className="absolute -top-1.5 -right-2 bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[16px] flex justify-center animate-pulse">
                 {item.badge}
               </span>
             ) : null}
           </div>
-          <span className="text-[10px] font-medium">{item.label}</span>
+          <span className={cn("text-[10px] font-semibold", location === item.path && "text-primary")}>{item.label}</span>
         </button>
       ))}
     </div>
@@ -754,7 +759,7 @@ function MerchantNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-neutral-900 text-white px-6 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto">
+    <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-gray-900 to-gray-800 text-white px-6 py-3 flex justify-around items-center z-50 pb-[env(safe-area-inset-bottom,8px)] max-w-2xl mx-auto">
       {navItems.map((item) => (
         <button
           key={item.label}
@@ -883,28 +888,28 @@ function CustomerHome() {
   };
 
   return (
-    <div className="min-h-screen overflow-y-auto pb-20 bg-neutral-50">
+    <div className="min-h-screen overflow-y-auto pb-20 bg-gradient-to-b from-orange-50/80 to-amber-50/40">
       {/* Header */}
-      <div className="bg-background p-4 sticky top-0 z-30 shadow-sm space-y-3">
+      <div className="bg-gradient-to-r from-amber-500 to-amber-400 p-4 sticky top-0 z-30 shadow-lg space-y-3 text-white">
         {!settings.isOpen && (
-           <div className="bg-red-500 text-white text-xs font-bold py-2 px-4 -mx-4 -mt-4 mb-2 flex items-center justify-center gap-2">
+           <div className="bg-red-700/80 text-white text-xs font-bold py-2 px-4 -mx-4 -mt-4 mb-2 flex items-center justify-center gap-2 backdrop-blur-sm">
               <LogOut className="w-3 h-3" />
               <span>STORE CLOSED {settings.nextOpenMessage ? `- ${settings.nextOpenMessage}` : `- Opens at ${settings.openTime}`}</span>
            </div>
         )}
         <div>
-          <div className="flex items-center gap-2 text-primary mb-1">
+          <div className="flex items-center gap-2 text-white/80 mb-1">
             <MapPin className="w-4 h-4 fill-current" />
             <span className="text-xs font-bold tracking-wider uppercase">Current Location</span>
           </div>
-          <h1 className="text-xl font-heading font-bold leading-tight line-clamp-1" onClick={() => setLocation("/profile-setup")}>
+          <h1 className="text-xl font-heading font-bold leading-tight line-clamp-1 text-white" onClick={() => setLocation("/profile-setup")}>
             {user?.address ? user.address : "Set your location"}
           </h1>
         </div>
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-orange-900/40" />
           <Input 
-            className="pl-9 bg-neutral-100 border-none" 
+            className="pl-9 bg-white/90 border-none text-foreground placeholder:text-orange-900/40 rounded-xl" 
             placeholder="Search for dishes..." 
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -997,15 +1002,15 @@ function CustomerHome() {
             
             <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-4">
               {finalDisplay.map((cat) => (
-                <div key={cat} className="flex flex-col items-center gap-2 cursor-pointer" onClick={() => setLocation(`/category/${encodeURIComponent(cat)}`)}>
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white shadow-sm border border-neutral-100 flex items-center justify-center overflow-hidden">
+                <div key={cat} className="flex flex-col items-center gap-2 cursor-pointer group" onClick={() => setLocation(`/category/${encodeURIComponent(cat)}`)}>
+                  <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-white shadow-md border-2 border-orange-200/60 flex items-center justify-center overflow-hidden group-hover:border-primary group-hover:shadow-lg transition-all">
                     {categoryImages[cat] ? (
                       <img src={categoryImages[cat]} alt={cat} className="w-full h-full object-cover" />
                     ) : (
-                      <div className="text-[10px] text-muted-foreground font-medium text-center p-1 break-words line-clamp-2">{cat}</div>
+                      <div className="text-[10px] text-primary/70 font-medium text-center p-1 break-words line-clamp-2">{cat}</div>
                     )}
                   </div>
-                  <span className="text-xs font-medium text-neutral-600 text-center line-clamp-1 w-full">{cat}</span>
+                  <span className="text-xs font-semibold text-foreground/70 text-center line-clamp-1 w-full">{cat}</span>
                 </div>
               ))}
               
@@ -1014,7 +1019,7 @@ function CustomerHome() {
                   <div className="w-16 h-16 rounded-full bg-primary/10 shadow-sm border border-primary/20 flex items-center justify-center overflow-hidden">
                      <ArrowRight className="w-6 h-6 text-primary" />
                   </div>
-                  <span className="text-xs font-medium text-neutral-600 text-center line-clamp-1 w-full">More</span>
+                  <span className="text-xs font-medium text-foreground/70 text-center line-clamp-1 w-full">More</span>
                 </div>
               )}
             </div>
@@ -1134,7 +1139,7 @@ function CustomerCart() {
 
   if (step === "success") {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-white text-center pb-20">
+      <div className="min-h-screen flex flex-col items-center justify-center p-6 bg-gradient-to-b from-orange-50 to-amber-50 text-center pb-20">
         <motion.div 
           initial={{ scale: 0 }} 
           animate={{ scale: 1 }}
@@ -1142,7 +1147,7 @@ function CustomerCart() {
         >
           <CheckCircle className="w-12 h-12 text-green-600" />
         </motion.div>
-        <h2 className="text-2xl font-heading font-bold text-neutral-900">Order Placed!</h2>
+        <h2 className="text-2xl font-heading font-bold text-foreground">Order Placed!</h2>
         <p className="text-muted-foreground mt-2">Merchant will confirm your payment and process the order shortly.</p>
         <Button className="mt-8 w-full" onClick={() => { setStep("cart"); setLocation("/"); }}>Back to Home</Button>
       </div>
@@ -1151,9 +1156,9 @@ function CustomerCart() {
 
   if (step === "payment") {
     return (
-      <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-        <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b">
-           <h1 className="font-heading font-bold text-lg">Payment</h1>
+      <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+        <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg">
+           <h1 className="font-heading font-bold text-lg text-white">Payment</h1>
         </div>
         
         <div className="p-4 space-y-4 flex-1">
@@ -1163,7 +1168,7 @@ function CustomerCart() {
               <CardDescription>Pay directly to merchant UPI</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="p-4 bg-neutral-100 rounded-lg flex items-center justify-between border border-dashed border-neutral-300">
+              <div className="p-4 bg-orange-50 rounded-lg flex items-center justify-between border border-dashed border-orange-200">
                 <code className="font-mono font-bold text-lg select-all">{settings.upiId}</code>
                 <Button variant="outline" size="sm" onClick={() => navigator.clipboard.writeText(settings.upiId)}>Copy</Button>
               </div>
@@ -1204,49 +1209,49 @@ function CustomerCart() {
   }
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-      <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b">
-         <h1 className="font-heading font-bold text-lg">My Cart</h1>
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+      <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg">
+         <h1 className="font-heading font-bold text-lg text-white">My Cart</h1>
       </div>
 
       {cartItems.length === 0 ? (
         <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground">
           <ShoppingBag className="w-16 h-16 opacity-20 mb-4" />
           <p>Your cart is empty</p>
-          <Button variant="link" onClick={() => setLocation("/")}>Browse Food</Button>
+          <Button variant="link" className="text-primary" onClick={() => setLocation("/")}>Browse Food</Button>
         </div>
       ) : (
         <div className="flex-1 overflow-y-auto">
           <div className="p-4 space-y-4">
             {cartItems.map((item: any) => (
-              <div key={item.id} className="bg-white p-3 rounded-xl shadow-sm border border-neutral-100 flex gap-3">
-                <div className="w-16 h-16 rounded-lg bg-neutral-100 overflow-hidden shrink-0">
+              <div key={item.id} className="bg-white p-3 rounded-xl shadow-md border border-orange-100/60 flex gap-3">
+                <div className="w-16 h-16 rounded-lg bg-orange-50 overflow-hidden shrink-0">
                   <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1">
                   <div className="flex justify-between items-start">
-                    <h3 className="font-medium text-sm text-neutral-800 line-clamp-1">{item.name}</h3>
-                    <p className="font-bold text-sm">₹{item.price * item.quantity}</p>
+                    <h3 className="font-medium text-sm text-foreground line-clamp-1">{item.name}</h3>
+                    <p className="font-bold text-sm text-primary">₹{item.price * item.quantity}</p>
                   </div>
                   <div className="flex items-center gap-3 mt-2">
-                    <div className="flex items-center gap-2 border border-primary/20 bg-primary/5 rounded-lg px-2 py-1">
-                       <button onClick={() => removeFromCart(item.id)} className="text-primary hover:bg-primary/10 rounded"><Minus className="w-3 h-3" /></button>
-                       <span className="text-sm font-bold w-4 text-center">{item.quantity}</span>
-                       <button onClick={() => addToCart(item.id)} className="text-primary hover:bg-primary/10 rounded"><Plus className="w-3 h-3" /></button>
+                    <div className="flex items-center gap-2 bg-primary rounded-lg px-2 py-1">
+                       <button onClick={() => removeFromCart(item.id)} className="text-white hover:bg-white/10 rounded"><Minus className="w-3 h-3" /></button>
+                       <span className="text-sm font-bold w-4 text-center text-white">{item.quantity}</span>
+                       <button onClick={() => addToCart(item.id)} className="text-white hover:bg-white/10 rounded"><Plus className="w-3 h-3" /></button>
                     </div>
                   </div>
                 </div>
               </div>
             ))}
 
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-neutral-100 space-y-3 mt-6">
-              <h3 className="font-bold text-sm text-neutral-500 uppercase tracking-wider">Bill Details</h3>
+            <div className="bg-white p-4 rounded-xl shadow-sm border border-orange-100/60 shadow-md space-y-3 mt-6">
+              <h3 className="font-bold text-sm text-foreground/60 uppercase tracking-wider">Bill Details</h3>
               <div className="flex justify-between text-sm">
-                <span className="text-neutral-600">Item Total</span>
+                <span className="text-foreground/70">Item Total</span>
                 <span>₹{subtotal}</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-neutral-600">Delivery Fee</span>
+                <span className="text-foreground/70">Delivery Fee</span>
                 <span>{isOutOfRange ? "—" : subtotal > 999 ? <span className="text-green-600 font-medium">FREE</span> : `₹${deliveryFee}`}</span>
               </div>
               {isOutOfRange && (
@@ -1259,7 +1264,7 @@ function CustomerCart() {
                 </div>
               )}
               <div className="flex justify-between text-sm">
-                <span className="text-neutral-600">Platform Fee</span>
+                <span className="text-foreground/70">Platform Fee</span>
                 <span>₹{platformFee}</span>
               </div>
               <div className="border-t border-dashed pt-3 flex justify-between font-bold text-base">
@@ -1314,14 +1319,14 @@ function CustomerMenu() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b space-y-3">
-         <h1 className="font-heading font-bold text-lg">Our Menu</h1>
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg space-y-3">
+         <h1 className="font-heading font-bold text-lg text-white">Our Menu</h1>
          
          <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input 
-              className="pl-9 bg-neutral-100 border-none" 
+              className="pl-9 bg-orange-50 border-none" 
               placeholder="Search for dishes..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -1363,15 +1368,15 @@ function CustomerMenu() {
                 key={item.id} 
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="bg-white rounded-2xl p-3 shadow-sm border border-neutral-100 flex gap-4"
+                className="bg-white rounded-2xl p-3 shadow-sm border border-orange-100/60 shadow-md flex gap-4"
               >
                 <div className="relative shrink-0">
-                  <div className="w-28 h-28 rounded-xl bg-neutral-100 overflow-hidden">
+                  <div className="w-28 h-28 rounded-xl bg-orange-50 overflow-hidden">
                     <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                   </div>
                   <Button 
                     size="sm" 
-                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-8 px-6 shadow-md bg-white text-primary hover:bg-neutral-50 hover:text-primary font-bold border border-neutral-200 uppercase text-xs"
+                    className="absolute -bottom-2 left-1/2 -translate-x-1/2 h-8 px-6 shadow-md bg-white text-primary hover:bg-orange-50 hover:text-primary font-bold border border-orange-200 uppercase text-xs"
                     onClick={() => handleAddToCart(item.id)}
                   >
                     ADD
@@ -1383,12 +1388,12 @@ function CustomerMenu() {
                       <div className={cn("w-full h-full rounded-full", item.isVeg ? "bg-green-600" : "bg-red-600")}></div>
                     </div>
                   </div>
-                  <h3 className="font-bold text-neutral-800 mt-1 line-clamp-1">{item.name}</h3>
+                  <h3 className="font-bold text-foreground mt-1 line-clamp-1">{item.name}</h3>
                   
                   <div className="flex items-center gap-2 mt-2">
-                     <span className="text-sm font-bold text-neutral-900">₹{item.price}</span>
+                     <span className="text-sm font-bold text-foreground">₹{item.price}</span>
                      {item.originalPrice && (
-                       <span className="text-xs text-neutral-400 line-through">₹{item.originalPrice}</span>
+                       <span className="text-xs text-foreground/40 line-through">₹{item.originalPrice}</span>
                      )}
                      {item.originalPrice && (
                        <span className="text-[10px] font-bold text-green-600">
@@ -1432,16 +1437,16 @@ function CustomerOrders() {
       case "delivered": return "bg-green-100 text-green-800 border-green-200";
       case "rejected": return "bg-red-100 text-red-800 border-red-200";
       case "refunded": return "bg-gray-100 text-gray-800 border-gray-200";
-      default: return "bg-neutral-100 text-neutral-800";
+      default: return "bg-orange-50 text-foreground";
     }
   };
 
   if (isLoading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b">
-         <h1 className="font-heading font-bold text-lg">My Orders</h1>
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg">
+         <h1 className="font-heading font-bold text-lg text-white">My Orders</h1>
       </div>
 
       <div className="p-4 space-y-4 overflow-y-auto flex-1">
@@ -1453,10 +1458,10 @@ function CustomerOrders() {
         ) : (
           sortedOrders.map((order: any) => (
             <Card key={order.id} className="overflow-hidden border-neutral-100 shadow-sm">
-               <div className="p-4 border-b bg-neutral-50 flex justify-between items-center">
+               <div className="p-4 border-b bg-orange-50/50 flex justify-between items-center">
                   <div>
                     <p className="font-bold text-sm">Order #{order.orderId}</p>
-                    <p className="text-xs text-neutral-500">{order.createdAt ? new Date(order.createdAt).toLocaleString() : ""}</p>
+                    <p className="text-xs text-foreground/60">{order.createdAt ? new Date(order.createdAt).toLocaleString() : ""}</p>
                   </div>
                   <Badge variant="outline" className={cn("border-0", getStatusColor(order.status))}>
                     {order.status.replace("_", " ")}
@@ -1466,7 +1471,7 @@ function CustomerOrders() {
                   <div className="space-y-1">
                     {order.items.map((item: any, idx: number) => (
                       <div key={idx} className="flex justify-between text-sm">
-                         <span className="text-neutral-600">{item.quantity} x {item.name}</span>
+                         <span className="text-foreground/70">{item.quantity} x {item.name}</span>
                          <span className="font-medium">₹{item.price * item.quantity}</span>
                       </div>
                     ))}
@@ -1495,27 +1500,27 @@ function CustomerProfile() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b">
-         <h1 className="font-heading font-bold text-lg">My Profile</h1>
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg">
+         <h1 className="font-heading font-bold text-lg text-white">My Profile</h1>
       </div>
 
       <div className="p-4 space-y-6 overflow-y-auto flex-1">
-         <div className="bg-white p-4 rounded-2xl shadow-sm border border-neutral-100 flex items-center gap-4">
+         <div className="bg-white p-4 rounded-2xl shadow-sm border border-orange-100/60 shadow-md flex items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-2xl flex-shrink-0">
               {user?.name?.[0] || "U"}
             </div>
             <div className="flex-1 min-w-0">
               <h2 className="font-bold text-lg">{user?.name || "User"}</h2>
-              <p className="text-sm text-neutral-500">{user?.phoneNumber}</p>
-              <p className="text-xs text-neutral-400 mt-1 line-clamp-1">{user?.address || "Address not set"}</p>
+              <p className="text-sm text-foreground/60">{user?.phoneNumber}</p>
+              <p className="text-xs text-foreground/40 mt-1 line-clamp-1">{user?.address || "Address not set"}</p>
             </div>
             <Button variant="outline" size="sm" className="flex-shrink-0" onClick={() => setLocation("/profile-setup")}>
               Edit
             </Button>
          </div>
 
-         <div className="bg-white rounded-2xl shadow-sm border border-neutral-100 overflow-hidden">
+         <div className="bg-white rounded-2xl shadow-sm border border-orange-100/60 shadow-md overflow-hidden">
             {[
               { icon: FileText, label: "Terms & Conditions", action: () => setLocation("/terms") },
               { icon: Shield, label: "Privacy Policy", action: () => setLocation("/privacy-policy") },
@@ -1523,12 +1528,12 @@ function CustomerProfile() {
               { icon: MapPin, label: "Delivery Policy", action: () => setLocation("/delivery-policy") },
               { icon: HelpCircle, label: "Contact Monisha Kitchen", action: () => setLocation("/contact") },
             ].map((item, idx) => (
-              <button key={idx} onClick={item.action} className="w-full p-4 flex items-center justify-between border-b last:border-0 hover:bg-neutral-50 text-left">
+              <button key={idx} onClick={item.action} className="w-full p-4 flex items-center justify-between border-b last:border-0 hover:bg-orange-50 text-left">
                  <div className="flex items-center gap-3">
-                   <item.icon className="w-5 h-5 text-neutral-500" />
-                   <span className="font-medium text-sm text-neutral-700">{item.label}</span>
+                   <item.icon className="w-5 h-5 text-foreground/60" />
+                   <span className="font-medium text-sm text-foreground/80">{item.label}</span>
                  </div>
-                 <ChevronRight className="w-4 h-4 text-neutral-400" />
+                 <ChevronRight className="w-4 h-4 text-foreground/40" />
               </button>
             ))}
          </div>
@@ -1539,10 +1544,10 @@ function CustomerProfile() {
          </Button>
 
          <div className="flex flex-col items-center gap-2 pt-6 pb-2">
-           <div className="w-10 h-10 bg-white rounded-lg shadow-sm border border-neutral-100 flex items-center justify-center overflow-hidden">
+           <div className="w-10 h-10 bg-white rounded-lg shadow-sm border border-orange-100/60 shadow-md flex items-center justify-center overflow-hidden">
              <img src="/images/gryfon-logo.png" alt="Gryfon Technologies" className="w-8 h-8 object-contain" />
            </div>
-           <p className="text-xs text-neutral-400">Designed and developed by <span className="font-semibold text-neutral-500">GRYFON TECHNOLOGIES</span></p>
+           <p className="text-xs text-foreground/40">Designed and developed by <span className="font-semibold text-foreground/60">GRYFON TECHNOLOGIES</span></p>
          </div>
       </div>
       <BottomNav />
@@ -1565,26 +1570,26 @@ function CustomerCategories() {
   if (menuLoading) return <LoadingSpinner />;
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
-         <h1 className="font-heading font-bold text-lg">All Categories</h1>
+         <h1 className="font-heading font-bold text-lg text-white">All Categories</h1>
       </div>
 
       <div className="p-4 overflow-y-auto flex-1">
         <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-4">
           {categories.map((cat) => (
             <div key={cat} className="flex flex-col items-center gap-2 cursor-pointer" onClick={() => setLocation(`/category/${encodeURIComponent(cat)}`)}>
-              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white shadow-sm border border-neutral-100 flex items-center justify-center overflow-hidden">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-white shadow-sm border border-orange-100/60 shadow-md flex items-center justify-center overflow-hidden">
                 {categoryImages[cat] ? (
                   <img src={categoryImages[cat]} alt={cat} className="w-full h-full object-cover" />
                 ) : (
                   <div className="text-[10px] text-muted-foreground font-medium text-center p-1 break-words line-clamp-2">{cat}</div>
                 )}
               </div>
-              <span className="text-xs font-medium text-neutral-600 text-center line-clamp-2 w-full px-1">{cat}</span>
+              <span className="text-xs font-medium text-foreground/70 text-center line-clamp-2 w-full px-1">{cat}</span>
             </div>
           ))}
         </div>
@@ -1651,12 +1656,12 @@ function CustomerCategoryItems({ params }: { params: { category: string } }) {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
-         <h1 className="font-heading font-bold text-lg">{category}</h1>
+         <h1 className="font-heading font-bold text-lg text-white">{category}</h1>
       </div>
 
       <div className="p-4 overflow-y-auto flex-1 space-y-4">
@@ -1682,15 +1687,15 @@ function CustomerTerms() {
   const setLocation = useLocation()[1];
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
-         <h1 className="font-heading font-bold text-lg">Terms & Conditions</h1>
+         <h1 className="font-heading font-bold text-lg text-white">Terms & Conditions</h1>
       </div>
 
-      <div className="p-6 space-y-8 overflow-y-auto flex-1 text-sm text-neutral-700 leading-relaxed">
+      <div className="p-6 space-y-8 overflow-y-auto flex-1 text-sm text-foreground/80 leading-relaxed">
         
         <div className="space-y-4">
           <div className="border-b pb-2">
@@ -1703,8 +1708,8 @@ function CustomerTerms() {
           </p>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">1. Use of the Application</h3>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <h3 className="font-bold text-foreground">1. Use of the Application</h3>
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>This application is intended for commercial food ordering and delivery purposes.</li>
               <li>Users must provide accurate and complete information while placing orders.</li>
               <li>Any misuse of the application, including fraudulent activity, false orders, or abuse of services, may result in suspension or termination of access.</li>
@@ -1712,8 +1717,8 @@ function CustomerTerms() {
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">2. Orders & Payments</h3>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <h3 className="font-bold text-foreground">2. Orders & Payments</h3>
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>All orders placed through the application are subject to acceptance by Monisha Kitchen.</li>
               <li>Prices, menu items, and availability may change without prior notice.</li>
               <li>Once an order is confirmed and food preparation has started, cancellation may not be permitted.</li>
@@ -1721,8 +1726,8 @@ function CustomerTerms() {
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">3. Food Quality & Allergies</h3>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <h3 className="font-bold text-foreground">3. Food Quality & Allergies</h3>
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>Monisha Kitchen follows standard food safety and hygiene practices.</li>
               <li>Customers are responsible for informing the restaurant of any food allergies or dietary restrictions before placing an order.</li>
               <li>Monisha Kitchen shall not be responsible for allergic reactions if such information is not provided in advance.</li>
@@ -1730,8 +1735,8 @@ function CustomerTerms() {
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">4. Delivery Responsibility</h3>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <h3 className="font-bold text-foreground">4. Delivery Responsibility</h3>
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>Delivery time estimates provided in the application are approximate.</li>
               <li>Delays may occur due to traffic conditions, weather, operational issues, or order volume.</li>
               <li>Such delays do not constitute a failure of service.</li>
@@ -1739,12 +1744,12 @@ function CustomerTerms() {
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">5. Limitation of Liability</h3>
+            <h3 className="font-bold text-foreground">5. Limitation of Liability</h3>
             <p>Monisha Kitchen shall not be liable for any indirect, incidental, or consequential damages arising from the use of this application or delivery services.</p>
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">6. Changes to Terms</h3>
+            <h3 className="font-bold text-foreground">6. Changes to Terms</h3>
             <p>Monisha Kitchen reserves the right to update or modify these Terms & Conditions at any time. Continued use of the application signifies acceptance of the revised terms.</p>
           </section>
         </div>
@@ -1757,23 +1762,23 @@ function CustomerPrivacyPolicy() {
   const setLocation = useLocation()[1];
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
-         <h1 className="font-heading font-bold text-lg">Privacy Policy</h1>
+         <h1 className="font-heading font-bold text-lg text-white">Privacy Policy</h1>
       </div>
 
-      <div className="p-6 space-y-8 overflow-y-auto flex-1 text-sm text-neutral-700 leading-relaxed">
+      <div className="p-6 space-y-8 overflow-y-auto flex-1 text-sm text-foreground/80 leading-relaxed">
         <div className="space-y-4">
           <h2 className="text-xl font-bold text-primary font-heading">🔒 Privacy Policy</h2>
           <p>Monisha Kitchen respects your privacy and is committed to protecting your personal information.</p>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">1. Information We Collect</h3>
+            <h3 className="font-bold text-foreground">1. Information We Collect</h3>
             <p>We may collect the following information:</p>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>Name</li>
               <li>Phone number</li>
               <li>Delivery address</li>
@@ -1782,9 +1787,9 @@ function CustomerPrivacyPolicy() {
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">2. Use of Information</h3>
+            <h3 className="font-bold text-foreground">2. Use of Information</h3>
             <p>Collected information is used solely for:</p>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>Processing and delivering orders</li>
               <li>Communicating order updates</li>
               <li>Customer support and service improvement</li>
@@ -1792,17 +1797,17 @@ function CustomerPrivacyPolicy() {
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">3. Data Sharing</h3>
+            <h3 className="font-bold text-foreground">3. Data Sharing</h3>
             <p>Personal information is not sold or shared with third parties except where required to fulfill delivery services or comply with legal obligations.</p>
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">4. Data Security</h3>
+            <h3 className="font-bold text-foreground">4. Data Security</h3>
             <p>We take reasonable measures to protect user data from unauthorized access, disclosure, or misuse.</p>
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">5. User Rights</h3>
+            <h3 className="font-bold text-foreground">5. User Rights</h3>
             <p>Users may contact Monisha Kitchen to request correction or deletion of their personal data, subject to legal and operational requirements.</p>
           </section>
         </div>
@@ -1815,30 +1820,30 @@ function CustomerRefundPolicy() {
   const setLocation = useLocation()[1];
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
-         <h1 className="font-heading font-bold text-lg">Refund & Cancellation</h1>
+         <h1 className="font-heading font-bold text-lg text-white">Refund & Cancellation</h1>
       </div>
 
-      <div className="p-6 space-y-8 overflow-y-auto flex-1 text-sm text-neutral-700 leading-relaxed">
+      <div className="p-6 space-y-8 overflow-y-auto flex-1 text-sm text-foreground/80 leading-relaxed">
         <div className="space-y-4">
           <h2 className="text-xl font-bold text-primary font-heading">💳 Refund & Cancellation Policy</h2>
           
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">Order Cancellation</h3>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <h3 className="font-bold text-foreground">Order Cancellation</h3>
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>Orders may be cancelled only before food preparation has started.</li>
               <li>Once preparation begins, cancellation requests may not be accepted.</li>
             </ul>
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">Refunds</h3>
+            <h3 className="font-bold text-foreground">Refunds</h3>
             <p>Refunds may be issued in cases of:</p>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>Incorrect items delivered</li>
               <li>Orders not delivered</li>
               <li>Quality issues reported within a reasonable time</li>
@@ -1856,23 +1861,23 @@ function CustomerDeliveryPolicy() {
   const setLocation = useLocation()[1];
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
-         <h1 className="font-heading font-bold text-lg">Delivery Policy</h1>
+         <h1 className="font-heading font-bold text-lg text-white">Delivery Policy</h1>
       </div>
 
-      <div className="p-6 space-y-8 overflow-y-auto flex-1 text-sm text-neutral-700 leading-relaxed">
+      <div className="p-6 space-y-8 overflow-y-auto flex-1 text-sm text-foreground/80 leading-relaxed">
         
         <div className="space-y-4">
           <h2 className="text-xl font-bold text-primary font-heading">🚚 Delivery Policy</h2>
           <p>Monisha Kitchen provides food delivery services arranged directly by the shop.</p>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">Delivery Arrangement</h3>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <h3 className="font-bold text-foreground">Delivery Arrangement</h3>
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>Delivery is managed by Monisha Kitchen.</li>
               <li>Customers must ensure the accuracy of delivery address and contact details.</li>
               <li>Monisha Kitchen is not responsible for delays or failed deliveries caused by incorrect information or customer unavailability.</li>
@@ -1880,8 +1885,8 @@ function CustomerDeliveryPolicy() {
           </section>
 
           <section className="space-y-2">
-            <h3 className="font-bold text-neutral-900">Estimated Delivery Time</h3>
-            <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+            <h3 className="font-bold text-foreground">Estimated Delivery Time</h3>
+            <ul className="list-disc pl-5 space-y-1 text-foreground/70">
               <li>Within 5 km radius: approximately 30 minutes</li>
               <li>Beyond 5 km radius: approximately 45 minutes</li>
             </ul>
@@ -1891,7 +1896,7 @@ function CustomerDeliveryPolicy() {
 
         <div className="space-y-4 pt-4 border-t border-neutral-200">
           <h2 className="text-xl font-bold text-primary font-heading">📍 Service Area Policy</h2>
-          <ul className="list-disc pl-5 space-y-1 text-neutral-600">
+          <ul className="list-disc pl-5 space-y-1 text-foreground/70">
             <li>Monisha Kitchen currently delivers within a limited service radius from the restaurant location.</li>
             <li>Orders placed outside the supported delivery area may be declined or subject to extended delivery times.</li>
             <li>Service areas may change based on operational capacity without prior notice.</li>
@@ -1907,22 +1912,22 @@ function CustomerContact() {
   const setLocation = useLocation()[1];
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/profile")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
-         <h1 className="font-heading font-bold text-lg">Contact Us</h1>
+         <h1 className="font-heading font-bold text-lg text-white">Contact Us</h1>
       </div>
 
-      <div className="p-6 space-y-6 overflow-y-auto flex-1 text-sm text-neutral-700 leading-relaxed">
-        <div className="bg-white p-6 rounded-2xl shadow-sm border border-neutral-100 text-center space-y-4">
+      <div className="p-6 space-y-6 overflow-y-auto flex-1 text-sm text-foreground/80 leading-relaxed">
+        <div className="bg-white p-6 rounded-2xl shadow-sm border border-orange-100/60 shadow-md text-center space-y-4">
            <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto">
               <Phone className="w-8 h-8 text-primary" />
            </div>
            
            <div>
-             <h2 className="text-xl font-bold text-neutral-900 font-heading">Monisha Kitchen</h2>
+             <h2 className="text-xl font-bold text-foreground font-heading">Monisha Kitchen</h2>
              <p className="text-muted-foreground mt-1">For any queries, complaints, or support requests, please contact us.</p>
            </div>
 
@@ -1935,7 +1940,7 @@ function CustomerContact() {
 
            <div className="pt-4 border-t border-neutral-100">
               <p className="text-xs text-muted-foreground uppercase tracking-wider font-bold mb-1">FSSAI License No.</p>
-              <p className="text-sm font-medium text-neutral-800">
+              <p className="text-sm font-medium text-foreground">
                 20119038001047
               </p>
            </div>
@@ -2008,13 +2013,13 @@ function CustomerBannerItems({ params }: { params: { bannerId: string } }) {
   if (!banner) return null;
 
   return (
-    <div className="min-h-screen bg-neutral-50 pb-20 flex flex-col">
-       <div className="p-4 bg-white sticky top-0 z-30 shadow-sm border-b flex items-center gap-3">
+    <div className="min-h-screen bg-gradient-to-b from-orange-50/80 to-amber-50/40 pb-20 flex flex-col">
+       <div className="p-4 bg-gradient-to-r from-amber-500 to-amber-400 sticky top-0 z-30 shadow-lg flex items-center gap-3">
          <Button variant="ghost" size="icon" onClick={() => setLocation("/")}>
             <ChevronRight className="w-6 h-6 rotate-180" />
          </Button>
          <div>
-           <h1 className="font-heading font-bold text-lg">{banner.title}</h1>
+           <h1 className="font-heading font-bold text-lg text-white">{banner.title}</h1>
            <p className="text-xs text-muted-foreground">{banner.subtitle}</p>
          </div>
       </div>
@@ -2111,7 +2116,7 @@ function MerchantDashboard() {
       case "delivered": return "bg-green-100 text-green-800 border-green-200";
       case "rejected": return "bg-red-100 text-red-800 border-red-200";
       case "refunded": return "bg-gray-100 text-gray-800 border-gray-200";
-      default: return "bg-neutral-100 text-neutral-800";
+      default: return "bg-orange-50 text-foreground";
     }
   };
 
@@ -2124,7 +2129,7 @@ function MerchantDashboard() {
        <div className="p-6 bg-neutral-900 sticky top-0 z-30 border-b border-neutral-800 flex justify-between items-center">
          <div>
             <h1 className="font-heading font-bold text-xl">{settings.storeName}</h1>
-            <p className="text-xs text-neutral-400 uppercase tracking-widest font-medium mt-1">Merchant Dashboard</p>
+            <p className="text-xs text-foreground/40 uppercase tracking-widest font-medium mt-1">Merchant Dashboard</p>
          </div>
          <div className="flex items-center gap-2">
            {!merchantLocationSet && (
@@ -2155,13 +2160,13 @@ function MerchantDashboard() {
               <CardContent className="pt-4 space-y-4">
                 <div className="text-sm bg-neutral-900/50 p-3 rounded-lg border border-neutral-700">
                    <p className="font-bold text-neutral-300 mb-1">Customer Details</p>
-                   <p className="flex items-center gap-2"><span className="text-neutral-500 w-16">Name:</span> {order.customerName}</p>
+                   <p className="flex items-center gap-2"><span className="text-foreground/60 w-16">Name:</span> {order.customerName}</p>
                    <p className="flex items-center gap-2">
-                     <span className="text-neutral-500 w-16">Phone:</span> 
+                     <span className="text-foreground/60 w-16">Phone:</span> 
                      <a href={`tel:${order.customerPhone}`} className="text-primary hover:underline">{order.customerPhone}</a>
                    </p>
                    <p className="flex items-start gap-2 mt-1">
-                     <span className="text-neutral-500 w-16 shrink-0">Address:</span> 
+                     <span className="text-foreground/60 w-16 shrink-0">Address:</span> 
                      <span className="break-words">{order.address}</span>
                    </p>
                 </div>
@@ -2169,8 +2174,8 @@ function MerchantDashboard() {
                 <div className="space-y-2">
                   {order.items.map((item: any, idx: number) => (
                     <div key={idx} className="flex justify-between text-sm">
-                       <span><span className="font-bold text-neutral-400">{item.quantity}x</span> {item.name}</span>
-                       <span className="text-neutral-400">₹{item.price * item.quantity}</span>
+                       <span><span className="font-bold text-foreground/40">{item.quantity}x</span> {item.name}</span>
+                       <span className="text-foreground/40">₹{item.price * item.quantity}</span>
                     </div>
                   ))}
                 </div>
@@ -2448,7 +2453,7 @@ function MerchantMenu() {
                       <button onClick={(e) => { e.stopPropagation(); deleteMenuMutation.mutate(item.id); }} className="text-red-400 hover:text-red-300"><Trash2 className="w-4 h-4" /></button>
                    </div>
                    <div className="flex items-center gap-2 mt-1">
-                     <p className="text-sm text-neutral-400">₹{item.price}</p>
+                     <p className="text-sm text-foreground/40">₹{item.price}</p>
                      {item.originalPrice && item.originalPrice > item.price && (
                         <Badge variant="outline" className="border-green-800 text-green-500 text-[10px] h-4 px-1">
                            {Math.round(((item.originalPrice - item.price) / item.originalPrice) * 100)}% OFF
@@ -2457,7 +2462,7 @@ function MerchantMenu() {
                    </div>
                    
                    <div className="flex gap-2 mt-2">
-                      <Badge variant="outline" className="border-neutral-600 text-neutral-400 text-[10px]">{item.category}</Badge>
+                      <Badge variant="outline" className="border-neutral-600 text-foreground/40 text-[10px]">{item.category}</Badge>
                       <Badge variant="outline" className={cn("text-[10px] border-transparent", item.isVeg ? "bg-green-900/30 text-green-400" : "bg-red-900/30 text-red-400")}>
                         {item.isVeg ? "VEG" : "NON-VEG"}
                       </Badge>
@@ -2501,13 +2506,13 @@ function MerchantMenu() {
                     <Label>Dish Type</Label>
                     <div className="flex bg-neutral-900 p-1 rounded-md border border-neutral-700">
                       <button 
-                        className={cn("flex-1 text-xs font-bold py-1.5 rounded", newItem.isVeg ? "bg-green-700 text-white" : "text-neutral-400 hover:text-white")}
+                        className={cn("flex-1 text-xs font-bold py-1.5 rounded", newItem.isVeg ? "bg-green-700 text-white" : "text-foreground/40 hover:text-white")}
                         onClick={() => setNewItem({...newItem, isVeg: true})}
                       >
                         Veg
                       </button>
                       <button 
-                        className={cn("flex-1 text-xs font-bold py-1.5 rounded", !newItem.isVeg ? "bg-red-700 text-white" : "text-neutral-400 hover:text-white")}
+                        className={cn("flex-1 text-xs font-bold py-1.5 rounded", !newItem.isVeg ? "bg-red-700 text-white" : "text-foreground/40 hover:text-white")}
                         onClick={() => setNewItem({...newItem, isVeg: false})}
                       >
                         Non-Veg
@@ -2522,7 +2527,7 @@ function MerchantMenu() {
                   <div className="w-16 h-16 border rounded overflow-hidden bg-neutral-900">
                     {newItem.image && <img src={newItem.image} className="w-full h-full object-cover" />}
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 space-y-2">
                      <input 
                        type="file" 
                        accept="image/*" 
@@ -2531,8 +2536,13 @@ function MerchantMenu() {
                        onChange={handleImageUpload}
                      />
                      <Button size="sm" variant="outline" className="w-full border-neutral-600 hover:bg-neutral-700" onClick={() => fileInputRef.current?.click()}>
-                       <Upload className="w-4 h-4 mr-2" /> Upload Photo
+                       <Upload className="w-4 h-4 mr-2" /> {newItem.image ? "Change Photo" : "Upload Photo"}
                      </Button>
+                     {newItem.image && (
+                       <Button size="sm" variant="destructive" className="w-full h-7 text-xs" onClick={() => setNewItem((prev: any) => ({ ...prev, image: "" }))}>
+                         <X className="w-3 h-3 mr-1" /> Remove Photo
+                       </Button>
+                     )}
                   </div>
                </div>
             </div>
@@ -2547,7 +2557,7 @@ function MerchantMenu() {
         <DialogContent className="bg-neutral-800 border-neutral-700 text-neutral-100">
            <DialogHeader>
               <DialogTitle>Import Menu from Excel/CSV</DialogTitle>
-              <CardDescription className="text-neutral-400">
+              <CardDescription className="text-foreground/40">
                 Bulk upload dishes using an Excel (.xlsx) or CSV file. This will replace existing items.
               </CardDescription>
            </DialogHeader>
@@ -2555,10 +2565,10 @@ function MerchantMenu() {
            <div className="space-y-4 py-4">
               <div className="p-4 bg-neutral-900 rounded-lg border border-neutral-700 space-y-2">
                  <h4 className="text-sm font-bold text-neutral-300">Format Required (Columns):</h4>
-                 <code className="block text-xs text-neutral-500 font-mono bg-black/30 p-2 rounded">
+                 <code className="block text-xs text-foreground/60 font-mono bg-black/30 p-2 rounded">
                    Dish Name | Price | Description | Category | Type
                  </code>
-                 <p className="text-xs text-neutral-500">Type can be "Veg" or "Non-Veg"</p>
+                 <p className="text-xs text-foreground/60">Type can be "Veg" or "Non-Veg"</p>
                  <Button variant="link" className="text-primary h-auto p-0 text-xs" onClick={downloadSampleCSV}>
                    <Download className="w-3 h-3 mr-1" /> Download Sample CSV
                  </Button>
@@ -2584,7 +2594,7 @@ function MerchantMenu() {
         <DialogContent className="bg-neutral-800 border-neutral-700 text-neutral-100 max-h-[80vh] overflow-y-auto">
             <DialogHeader>
               <DialogTitle>Manage Categories</DialogTitle>
-              <CardDescription className="text-neutral-400">
+              <CardDescription className="text-foreground/40">
                   Select categories to show on home screen and update images.
               </CardDescription>
             </DialogHeader>
@@ -2593,7 +2603,7 @@ function MerchantMenu() {
                {categories.map((cat) => (
                    <div key={cat} className={cn("bg-neutral-900 p-3 rounded-lg border flex flex-col items-center gap-2", visibleCategories.includes(cat) ? "border-primary" : "border-neutral-700")}>
                        <div className="w-full flex justify-between items-start mb-1">
-                          <span className="text-[10px] text-neutral-500">{visibleCategories.includes(cat) ? "Shown" : "Hidden"}</span>
+                          <span className="text-[10px] text-foreground/60">{visibleCategories.includes(cat) ? "Shown" : "Hidden"}</span>
                           <input 
                             type="checkbox" 
                             checked={visibleCategories.includes(cat)} 
@@ -2602,20 +2612,18 @@ function MerchantMenu() {
                           />
                        </div>
                        
-                       <div className="w-full aspect-square bg-neutral-800 rounded overflow-hidden relative group">
+                       <div className="w-full aspect-square bg-neutral-800 rounded overflow-hidden">
                            {categoryImages[cat] ? (
                                <img src={categoryImages[cat]} alt={cat} className="w-full h-full object-cover" />
                            ) : (
-                               <div className="flex items-center justify-center w-full h-full text-neutral-600 text-xs text-center p-2">
+                               <div className="flex items-center justify-center w-full h-full text-foreground/70 text-xs text-center p-2">
                                    No Image
                                </div>
                            )}
-                           <div className="absolute inset-0 bg-black/50 hidden group-hover:flex items-center justify-center">
-                               <Button size="sm" variant="secondary" className="h-8 text-xs" onClick={() => { setSelectedCategory(cat); categoryImageRef.current?.click(); }}>
-                                   Change
-                               </Button>
-                           </div>
                        </div>
+                       <Button size="sm" variant="secondary" className="w-full h-7 text-[10px]" onClick={() => { setSelectedCategory(cat); categoryImageRef.current?.click(); }}>
+                           <Upload className="w-3 h-3 mr-1" /> {categoryImages[cat] ? "Change" : "Upload"}
+                       </Button>
                        <span className="text-xs font-bold truncate w-full text-center">{cat}</span>
                    </div>
                ))}
@@ -2722,7 +2730,7 @@ function MerchantSettings() {
                 <div className="flex items-center justify-between bg-neutral-800 p-4 rounded-lg border border-neutral-700">
                    <div>
                       <Label className="text-base font-bold">Store Status</Label>
-                      <p className="text-xs text-neutral-400 mt-1">
+                      <p className="text-xs text-foreground/40 mt-1">
                         {settings.isOpen ? "Currently Open for Orders" : "Store is Closed"}
                       </p>
                    </div>
@@ -2768,7 +2776,7 @@ function MerchantSettings() {
                         value={settings.nextOpenMessage} 
                         onChange={(e) => updateSettings({ nextOpenMessage: e.target.value })} 
                       />
-                      <p className="text-xs text-neutral-500">Shown to customers when store is closed.</p>
+                      <p className="text-xs text-foreground/60">Shown to customers when store is closed.</p>
                   </div>
                 )}
              </div>
@@ -2776,14 +2784,14 @@ function MerchantSettings() {
              <div className="space-y-2">
                 <Label>UPI ID (For Payments)</Label>
                 <Input className="bg-neutral-800 border-neutral-700" value={settings.upiId} onChange={(e) => updateSettings({ upiId: e.target.value })} />
-                <p className="text-xs text-neutral-500">Customers will send payments to this ID.</p>
+                <p className="text-xs text-foreground/60">Customers will send payments to this ID.</p>
              </div>
              
              <div className="space-y-2">
                 <Label>Store Location & Delivery Radius</Label>
                 <div className="bg-neutral-800 rounded-lg p-3 space-y-2">
                   <div className="flex items-center justify-between">
-                    <div className="text-sm text-neutral-400">
+                    <div className="text-sm text-foreground/40">
                       <p>Lat: {settings.locationLat.toFixed(4)}, Lng: {settings.locationLng.toFixed(4)}</p>
                       <p>Radius: {settings.deliveryRadiusKm} km</p>
                     </div>
@@ -2842,37 +2850,39 @@ function MerchantSettings() {
                    <div className="grid gap-2">
                       <Label className="text-xs">Banner Image (Optional)</Label>
                       {banner.image ? (
-                        <div className="relative w-full h-32 rounded-lg overflow-hidden group">
-                           <img src={banner.image} alt="Banner" className="w-full h-full object-cover" />
-                           <div className="absolute inset-0 bg-black/50 hidden group-hover:flex items-center justify-center gap-2">
+                        <div className="space-y-2">
+                           <div className="w-full h-32 rounded-lg overflow-hidden">
+                              <img src={banner.image} alt="Banner" className="w-full h-full object-cover" />
+                           </div>
+                           <div className="flex gap-2">
                               <Button 
                                 size="sm" 
                                 variant="secondary" 
-                                className="h-8 text-xs" 
+                                className="flex-1 h-8 text-xs" 
                                 onClick={() => { setUploadingBannerId(banner.id); bannerImageRef.current?.click(); }}
                               >
-                                Change
+                                <Upload className="w-3 h-3 mr-1" /> Change
                               </Button>
                               <Button 
                                 size="sm" 
                                 variant="destructive" 
-                                className="h-8 text-xs" 
+                                className="flex-1 h-8 text-xs" 
                                 onClick={() => updateBanner(banner.id, { image: "" })}
                               >
-                                Remove
+                                <X className="w-3 h-3 mr-1" /> Remove
                               </Button>
                            </div>
                         </div>
                       ) : (
                         <div 
-                          className="w-full h-20 border-2 border-dashed border-neutral-700 rounded-lg flex flex-col items-center justify-center text-neutral-500 hover:text-neutral-300 hover:border-neutral-500 cursor-pointer transition-colors"
+                          className="w-full h-20 border-2 border-dashed border-neutral-700 rounded-lg flex flex-col items-center justify-center text-foreground/60 hover:text-neutral-300 hover:border-neutral-500 cursor-pointer transition-colors"
                           onClick={() => { setUploadingBannerId(banner.id); bannerImageRef.current?.click(); }}
                         >
                            <ImageIcon className="w-5 h-5 mb-1" />
                            <span className="text-[10px]">Upload Image</span>
                         </div>
                       )}
-                      <p className="text-[10px] text-neutral-500">Recommended size: 800x400px (2:1 aspect ratio)</p>
+                      <p className="text-[10px] text-foreground/60">Recommended size: 800x400px (2:1 aspect ratio)</p>
                    </div>
 
                    <div className="pt-2">
@@ -2903,7 +2913,7 @@ function MerchantSettings() {
                
                <div className="sticky top-0 bg-neutral-800 z-10 py-2">
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/40" />
                     <Input 
                       className="pl-9 bg-neutral-900 border-neutral-700 text-sm" 
                       placeholder="Search items..." 
@@ -2939,13 +2949,13 @@ function MerchantSettings() {
                              />
                              <div className="flex-1">
                                 <p className="text-sm font-medium">{item.name}</p>
-                                <p className="text-xs text-neutral-400">₹{item.price}</p>
+                                <p className="text-xs text-foreground/40">₹{item.price}</p>
                              </div>
                           </div>
                        );
                     })
                   ) : (
-                    <div className="text-center py-8 text-neutral-500">
+                    <div className="text-center py-8 text-foreground/60">
                        <p>No items found</p>
                     </div>
                   )}
@@ -2955,7 +2965,7 @@ function MerchantSettings() {
 
          <div className="p-4 bg-neutral-800 rounded-xl border border-neutral-700 mt-8">
             <h3 className="font-bold mb-2 text-primary">Mock Verification</h3>
-            <p className="text-sm text-neutral-400">
+            <p className="text-sm text-foreground/40">
               In a real app, UPI payments would be verified via bank SMS parsing or Payment Gateway Webhooks. 
               Here, you manually check your bank app and approve the order in the "Orders" tab.
             </p>
@@ -3000,7 +3010,7 @@ function MerchantCustomers() {
          <h1 className="font-heading font-bold text-xl">Customers</h1>
          
          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground/60" />
             <Input 
               className="pl-9 bg-neutral-800 border-neutral-700 text-sm h-10" 
               placeholder="Search by phone number..." 
@@ -3024,8 +3034,8 @@ function MerchantCustomers() {
                 </div>
                 <div className="flex-1 min-w-0">
                    <h3 className="font-bold truncate">{customer.name || "Unknown"}</h3>
-                   <p className="text-sm text-neutral-400 mt-1">{customer.phoneNumber}</p>
-                   {customer.address && <p className="text-xs text-neutral-500 mt-2 line-clamp-2">{customer.address}</p>}
+                   <p className="text-sm text-foreground/40 mt-1">{customer.phoneNumber}</p>
+                   {customer.address && <p className="text-xs text-foreground/60 mt-2 line-clamp-2">{customer.address}</p>}
                    {customer.locationLat && (
                      <div className="flex items-center gap-1 mt-2 text-xs text-green-500">
                        <MapPin className="w-3 h-3" />
