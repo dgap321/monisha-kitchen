@@ -6,8 +6,12 @@ import "./index.css";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 5000,
-      refetchOnWindowFocus: true,
+      staleTime: 30000,
+      refetchOnWindowFocus: false,
+      retry: (failureCount, error) => {
+        if (error?.message?.includes("401") || error?.message?.includes("Unauthorized")) return false;
+        return failureCount < 2;
+      },
     },
   },
 });

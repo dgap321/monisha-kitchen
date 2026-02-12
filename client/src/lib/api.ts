@@ -53,6 +53,7 @@ export const menuQueryOptions = queryOptions({
 export const ordersQueryOptions = queryOptions({
   queryKey: ["orders"],
   queryFn: () => fetchJson<any[]>("/api/orders"),
+  retry: false,
 });
 
 export const customerOrdersQueryOptions = (phone: string) =>
@@ -80,6 +81,7 @@ export const categoriesQueryOptions = queryOptions({
 export const customersQueryOptions = queryOptions({
   queryKey: ["customers"],
   queryFn: () => fetchJson<any[]>("/api/customers"),
+  retry: false,
 });
 
 export const customerByPhoneQueryOptions = (phone: string) =>
