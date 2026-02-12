@@ -89,3 +89,18 @@ export const categoryImages = pgTable("category_images", {
 });
 
 export type CategoryImage = typeof categoryImages.$inferSelect;
+
+export const reviews = pgTable("reviews", {
+  id: serial("id").primaryKey(),
+  orderId: text("order_id").notNull(),
+  menuItemId: integer("menu_item_id").notNull(),
+  customerPhone: text("customer_phone").notNull(),
+  customerName: text("customer_name").notNull().default(""),
+  stars: integer("stars").notNull(),
+  comment: text("comment").notNull().default(""),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const insertReviewSchema = createInsertSchema(reviews).omit({ id: true, createdAt: true });
+export type InsertReview = z.infer<typeof insertReviewSchema>;
+export type Review = typeof reviews.$inferSelect;

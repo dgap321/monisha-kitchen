@@ -7,6 +7,7 @@ import {
   storeSettings, type StoreSettings,
   banners, type Banner, type InsertBanner,
   categoryImages, type CategoryImage,
+  reviews, type Review, type InsertReview,
 } from "@shared/schema";
 
 export interface IStorage {
@@ -43,6 +44,13 @@ export interface IStorage {
   upsertCategoryImage(category: string, image: string, visible?: boolean): Promise<CategoryImage>;
   toggleCategoryVisibility(category: string): Promise<CategoryImage | undefined>;
   setVisibleCategories(categories: string[]): Promise<void>;
+
+  // Reviews
+  getReviews(): Promise<Review[]>;
+  getReviewsByMenuItem(menuItemId: number): Promise<Review[]>;
+  getReviewsByOrder(orderId: string): Promise<Review[]>;
+  createReview(review: InsertReview): Promise<Review>;
+  deleteReview(id: number): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -206,6 +214,28 @@ export class DatabaseStorage implements IStorage {
         await db.insert(categoryImages).values({ category: cat, image: "", visible: true });
       }
     }
+  }
+
+  // Reviews
+  async getReviews(): Promise<Review[]> {
+    return db.select().from(reviews).orderBy(desc(reviews.createdAt));
+  }
+
+  async getReviewsByMenuItem(menuItemId: number): Promise<Review[]> {
+    return db.select().from(reviews).where(eq(reviews.menuItemId, menuItemId)).orderBy(desc(reviews.createdAt));
+  }
+
+  async getReviewsByOrder(orderId: string): Promise<Review[]> {
+    return db.select().from(reviews).where(eq(reviews.orderId, orderId));
+  }
+
+  async createReview(review: InsertReview): Promise<Review> {
+    const [created] = await db.insert(reviews).values(review).returning();
+    return created;
+  }
+
+  async deleteReview(id: number): Promise<void> {
+    await db.delete(reviews).where(eq(reviews.id, id));
   }
 }
 

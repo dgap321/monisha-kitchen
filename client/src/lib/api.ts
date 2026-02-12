@@ -91,3 +91,23 @@ export const customerByPhoneQueryOptions = (phone: string) =>
     enabled: !!phone,
     retry: false,
   });
+
+export const reviewsQueryOptions = queryOptions({
+  queryKey: ["reviews"],
+  queryFn: () => fetchJson<any[]>("/api/reviews"),
+  retry: false,
+});
+
+export const reviewsByItemQueryOptions = (menuItemId: number) =>
+  queryOptions({
+    queryKey: ["reviews", "item", menuItemId],
+    queryFn: () => fetchJson<any[]>(`/api/reviews/item/${menuItemId}`),
+    enabled: menuItemId > 0,
+  });
+
+export const reviewsByOrderQueryOptions = (orderId: string) =>
+  queryOptions({
+    queryKey: ["reviews", "order", orderId],
+    queryFn: () => fetchJson<any[]>(`/api/reviews/order/${orderId}`),
+    enabled: !!orderId,
+  });

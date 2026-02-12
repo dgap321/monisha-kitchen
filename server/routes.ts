@@ -165,5 +165,54 @@ export async function registerRoutes(
     res.json({ success: true });
   });
 
+  // ===== REVIEWS =====
+  app.get("/api/reviews", async (_req, res) => {
+    const all = await storage.getReviews();
+    res.json(all);
+  });
+
+  app.get("/api/reviews/item/:menuItemId", async (req, res) => {
+    const menuItemId = parseInt(req.params.menuItemId);
+    const itemReviews = await storage.getReviewsByMenuItem(menuItemId);
+    res.json(itemReviews);
+  });
+
+  app.get("/api/reviews/order/:orderId", async (req, res) => {
+    const orderReviews = await storage.getReviewsByOrder(req.params.orderId);
+    res.json(orderReviews);
+  });
+
+  app.post("/api/reviews", async (req, res) => {
+    const { orderId, menuItemId, customerPhone, customerName, stars, comment } = req.body;
+    if (!orderId || !menuItemId || !customerPhone || typeof stars !== "number" || stars < 1 || stars > 5) {
+      return res.status(400).json({ message: "Invalid review data. Stars must be 1-5, orderId/menuItemId/customerPhone required." });
+    }
+    const orders = await storage.getOrdersByPhone(customerPhone);
+    const order = orders.find((o: any) => o.orderId === orderId);
+    if (!order || order.status !== "delivered") {
+      return res.status(403).json({ message: "Can only review delivered orders belonging to you." });
+    }
+    const existing = await storage.getReviewsByOrder(orderId);
+    const alreadyReviewed = existing.find((r: any) => r.menuItemId === menuItemId);
+    if (alreadyReviewed) {
+      return res.status(409).json({ message: "Already reviewed this item for this order." });
+    }
+    const review = await storage.createReview({
+      orderId,
+      menuItemId,
+      customerPhone,
+      customerName: customerName || "",
+      stars,
+      comment: comment || "",
+    });
+    res.json(review);
+  });
+
+  app.delete("/api/reviews/:id", requireMerchantAuth, async (req: any, res) => {
+    const id = parseInt(req.params.id);
+    await storage.deleteReview(id);
+    res.json({ ok: true });
+  });
+
   return httpServer;
 }

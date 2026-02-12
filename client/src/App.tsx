@@ -4,11 +4,12 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   menuQueryOptions, ordersQueryOptions, customerOrdersQueryOptions,
   settingsQueryOptions, bannersQueryOptions, categoriesQueryOptions,
-  customersQueryOptions, apiPost, apiPatch, apiDelete
+  customersQueryOptions, reviewsQueryOptions, reviewsByItemQueryOptions,
+  reviewsByOrderQueryOptions, apiPost, apiPatch, apiDelete
 } from "@/lib/api";
 import { Toaster } from "@/components/ui/toaster";
 import { Button } from "@/components/ui/button";
-import { Home, ShoppingBag, Store, ListOrdered, Settings, Plus, Minus, Trash2, MapPin, CheckCircle, XCircle, ChevronRight, Upload, Phone, ArrowRight, User, Users, FileText, HelpCircle, LogOut, Utensils, IndianRupee, Image as ImageIcon, Search, FileSpreadsheet, Download, Shield, RefreshCcw, Ban, Check, Eye, EyeOff, X } from "lucide-react";
+import { Home, ShoppingBag, Store, ListOrdered, Settings, Plus, Minus, Trash2, MapPin, CheckCircle, XCircle, ChevronRight, Upload, Phone, ArrowRight, User, Users, FileText, HelpCircle, LogOut, Utensils, IndianRupee, Image as ImageIcon, Search, FileSpreadsheet, Download, Shield, RefreshCcw, Ban, Check, Eye, EyeOff, X, Star } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
@@ -80,6 +81,8 @@ function DishCard({ item, handleAddToCart }: { item: any; handleAddToCart: (id: 
   const cart = useStore((state) => state.cart);
   const cartItem = cart.find(c => c.itemId === item.id);
   const quantity = cartItem?.quantity || 0;
+  const { data: itemReviews = [] } = useQuery(reviewsByItemQueryOptions(item.id));
+  const avgRating = itemReviews.length > 0 ? (itemReviews.reduce((sum: number, r: any) => sum + r.stars, 0) / itemReviews.length).toFixed(1) : null;
 
   return (
     <motion.div 
@@ -126,6 +129,13 @@ function DishCard({ item, handleAddToCart }: { item: any; handleAddToCart: (id: 
         </div>
         <h3 className="font-bold text-foreground mt-1 line-clamp-1">{item.name}</h3>
         <p className="text-sm font-bold text-primary mt-2">₹{item.price}</p>
+        {avgRating && (
+          <div className="flex items-center gap-1 mt-0.5" data-testid={`rating-dish-${item.id}`}>
+            <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
+            <span className="text-xs text-amber-600 font-medium">{avgRating}</span>
+            <span className="text-xs text-amber-400">({itemReviews.length})</span>
+          </div>
+        )}
         
         <div className="relative mt-1">
           <p className={cn("text-xs text-muted-foreground leading-relaxed", !isExpanded && "line-clamp-2")}>
@@ -530,9 +540,11 @@ function LoginPage() {
 
   return (
     <div className="min-h-screen relative flex items-center justify-center font-sans">
-      <img
-        src="/assets/login-bg.gif"
-        alt=""
+      <video
+        src="/assets/login-bg.mp4"
+        autoPlay
+        muted
+        playsInline
         className="absolute inset-0 w-full h-full object-cover"
       />
 
@@ -755,6 +767,7 @@ function MerchantNav() {
     { icon: ListOrdered, label: "Orders", path: "/merchant" },
     { icon: Users, label: "Customers", path: "/merchant/customers" },
     { icon: Store, label: "Menu", path: "/merchant/menu" },
+    { icon: Star, label: "Reviews", path: "/merchant/reviews" },
     { icon: Settings, label: "Settings", path: "/merchant/settings" },
   ];
 
@@ -1417,6 +1430,79 @@ function CustomerMenu() {
   );
 }
 
+function OrderReviewSection({ order }: { order: any }) {
+  const { data: existingReviews = [], isLoading } = useQuery(reviewsByOrderQueryOptions(order.orderId));
+  const [stars, setStars] = useState(5);
+  const [comment, setComment] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  if (isLoading) return null;
+
+  if (existingReviews.length > 0) {
+    const avg = (existingReviews.reduce((sum: number, r: any) => sum + r.stars, 0) / existingReviews.length).toFixed(1);
+    return (
+      <div className="border-t mt-3 pt-3">
+        <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200" data-testid={`badge-reviewed-${order.orderId}`}>
+          Reviewed ★ {avg}
+        </Badge>
+      </div>
+    );
+  }
+
+  const handleSubmit = async () => {
+    setSubmitting(true);
+    try {
+      for (const item of order.items) {
+        await apiPost("/api/reviews", {
+          orderId: order.orderId,
+          menuItemId: item.id || item.itemId,
+          customerPhone: order.customerPhone,
+          customerName: order.customerName,
+          stars,
+          comment,
+        });
+      }
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      toast({ title: "Review Submitted", description: "Thank you for your feedback!" });
+    } catch {
+      toast({ title: "Error", description: "Failed to submit review. Please try again.", variant: "destructive" });
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="border-t mt-3 pt-3 space-y-2">
+      <p className="text-xs font-medium text-foreground/70">Rate this order</p>
+      <div className="flex gap-1" data-testid={`star-selector-${order.orderId}`}>
+        {[1, 2, 3, 4, 5].map((s) => (
+          <button key={s} onClick={() => setStars(s)} data-testid={`star-${s}-${order.orderId}`}>
+            <Star className={cn("w-6 h-6 transition-colors", s <= stars ? "fill-amber-400 text-amber-400" : "text-gray-300")} />
+          </button>
+        ))}
+      </div>
+      <Input
+        placeholder="Add a comment (optional)"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        className="text-sm h-9"
+        data-testid={`input-review-comment-${order.orderId}`}
+      />
+      <Button
+        size="sm"
+        className="w-full"
+        onClick={handleSubmit}
+        disabled={submitting}
+        data-testid={`button-submit-review-${order.orderId}`}
+      >
+        {submitting ? "Submitting..." : "Submit Review"}
+      </Button>
+    </motion.div>
+  );
+}
+
 function CustomerOrders() {
   const user = useStore((state) => state.user);
   const { data: orders = [], isLoading } = useQuery(customerOrdersQueryOptions(user?.phoneNumber || ""));
@@ -1480,6 +1566,7 @@ function CustomerOrders() {
                     <span>Total Bill</span>
                     <span>₹{order.total}</span>
                   </div>
+                  {order.status === "delivered" && <OrderReviewSection order={order} />}
                </CardContent>
             </Card>
           ))
@@ -3066,6 +3153,80 @@ function MerchantCustomers() {
   );
 }
 
+function MerchantReviews() {
+  const { data: allReviews = [], isLoading } = useQuery(reviewsQueryOptions);
+  const { data: menu = [] } = useQuery(menuQueryOptions);
+  const queryClient = useQueryClient();
+  const { toast } = useToast();
+
+  const menuMap: Record<number, string> = {};
+  menu.forEach((m: any) => { menuMap[m.id] = m.name; });
+
+  const handleDelete = async (id: number) => {
+    try {
+      await apiDelete(`/api/reviews/${id}`);
+      queryClient.invalidateQueries({ queryKey: ["reviews"] });
+      toast({ title: "Review Deleted", description: "The review has been removed." });
+    } catch {
+      toast({ title: "Error", description: "Failed to delete review.", variant: "destructive" });
+    }
+  };
+
+  if (isLoading) return <LoadingSpinner />;
+
+  return (
+    <div className="min-h-screen bg-amber-50 pb-20 text-foreground flex flex-col">
+      <div className="p-6 bg-amber-50 sticky top-0 z-30 border-b border-amber-200">
+        <h1 className="font-heading font-bold text-xl">Reviews</h1>
+        <p className="text-sm text-foreground/60 mt-1">{allReviews.length} total reviews</p>
+      </div>
+
+      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        {allReviews.length === 0 ? (
+          <div className="text-center py-20 opacity-50">
+            <Star className="w-16 h-16 mx-auto mb-4" />
+            <p>No reviews yet</p>
+          </div>
+        ) : (
+          allReviews.map((review: any) => (
+            <motion.div
+              key={review.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="bg-amber-100 p-4 rounded-xl border border-amber-200"
+              data-testid={`review-card-${review.id}`}
+            >
+              <div className="flex justify-between items-start">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-sm truncate">{review.customerName || "Anonymous"}</span>
+                    <span className="text-xs text-foreground/40">{review.createdAt ? new Date(review.createdAt).toLocaleDateString() : ""}</span>
+                  </div>
+                  <div className="flex gap-0.5 mt-1">
+                    {[1, 2, 3, 4, 5].map((s) => (
+                      <Star key={s} className={cn("w-4 h-4", s <= review.stars ? "fill-amber-400 text-amber-400" : "text-gray-300")} />
+                    ))}
+                  </div>
+                  <p className="text-xs text-foreground/60 mt-1">{menuMap[review.menuItemId] || `Item #${review.menuItemId}`}</p>
+                  {review.comment && <p className="text-sm mt-2 text-foreground/80">{review.comment}</p>}
+                </div>
+                <button
+                  onClick={() => handleDelete(review.id)}
+                  className="text-red-400 hover:text-red-600 transition-colors p-1"
+                  data-testid={`button-delete-review-${review.id}`}
+                >
+                  <Trash2 className="w-4 h-4" />
+                </button>
+              </div>
+            </motion.div>
+          ))
+        )}
+      </div>
+      <MerchantNav />
+    </div>
+  );
+}
+
 function SplashScreen({ onFinish }: { onFinish: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -3122,6 +3283,7 @@ function App() {
             <Route path="/merchant/menu" component={MerchantMenu} />
             <Route path="/merchant/settings" component={MerchantSettings} />
             <Route path="/merchant/customers" component={MerchantCustomers} />
+            <Route path="/merchant/reviews" component={MerchantReviews} />
             <Route component={MerchantDashboard} />
           </RouteSwitch>
         ) : !isAuthenticated ? (
